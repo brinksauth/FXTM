@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
 import {
   LayoutDashboard,
   Briefcase,
@@ -14,26 +13,11 @@ import {
   HelpCircle,
   LogOut
 } from 'lucide-react';
+import Image from 'next/image';
 
 interface SidebarProps {
   onLogout?: () => void;
 }
-
-const GemIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="M6 3h12l4 6-10 12L2 9z" />
-    <path d="M11 3 8 9l4 12 4-12-3-6" />
-    <path d="M2 9h20" />
-  </svg>
-);
 
 export default function Sidebar({ onLogout }: SidebarProps) {
   const pathname = usePathname();
@@ -61,16 +45,16 @@ export default function Sidebar({ onLogout }: SidebarProps) {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex flex-col w-64 bg-bg-card border-r border-border-main fixed top-0 bottom-0 left-0 z-20">
+      <aside className="hidden md:flex flex-col w-64 glass-panel border-r border-border-main fixed top-0 bottom-0 left-0 z-20">
         {/* Brand Header */}
         <div className="h-20 flex items-center px-6 border-b border-border-main gap-3">
-          <GemIcon className="w-8 h-8 text-orange-primary" />
+          <Image src="/icon.svg" alt="FXTM Logo" width={32} height={32} />
           <div>
-            <h1 className="font-display font-bold text-lg text-gray-900 leading-tight tracking-wide">
-              BITCOIN GEM
+            <h1 className="font-display font-bold text-lg text-text-primary leading-tight tracking-wide">
+              FXTM
             </h1>
-            <span className="text-[10px] font-semibold text-orange-primary uppercase tracking-widest">
-              Boveda de Inversion
+            <span className="text-[10px] font-semibold text-brand-primary uppercase tracking-widest">
+              Trading de Élite
             </span>
           </div>
         </div>
@@ -88,21 +72,17 @@ export default function Sidebar({ onLogout }: SidebarProps) {
                 className={`relative flex items-center gap-4 px-4 py-3.5 rounded-xl font-medium text-sm transition-all duration-300 group ${
                   isActive
                     ? 'text-white font-bold relative z-10'
-                    : 'text-text-muted hover:text-gray-900 hover:bg-bg-main/50 relative z-10'
+                    : 'text-text-muted hover:text-text-primary hover:bg-bg-card-hover relative z-10'
                 }`}
               >
                 {isActive && (
-                  <motion.div
-                    layoutId="sidebar-active-indicator"
-                    className="absolute inset-0 bg-orange-primary rounded-xl"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
+                  <div className="absolute inset-0 bg-brand-primary/20 border border-brand-primary/30 rounded-xl" />
                 )}
                 
                 <Icon
                   className={`w-5 h-5 relative z-10`}
                   strokeWidth={isActive ? 2.5 : 2}
-                  fill={isActive ? 'rgba(255, 255, 255, 0.2)' : 'none'}
+                  fill={isActive ? 'rgba(255, 179, 195, 0.2)' : 'none'}
                 />
                 <span className="relative z-10">{item.name}</span>
               </Link>
@@ -114,7 +94,7 @@ export default function Sidebar({ onLogout }: SidebarProps) {
         <div className="p-4 border-t border-border-main">
           <button
             onClick={handleLogoutClick}
-            className="flex items-center gap-4 w-full px-4 py-3 rounded-xl font-medium text-sm text-red-600 hover:bg-red-50 transition-all duration-300 group"
+            className="flex items-center gap-4 w-full px-4 py-3 rounded-xl font-medium text-sm text-red-400 hover:bg-red-500/10 transition-all duration-300 group"
           >
             <LogOut className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
             <span>Cerrar Sesión</span>
@@ -123,7 +103,7 @@ export default function Sidebar({ onLogout }: SidebarProps) {
       </aside>
 
       {/* Mobile Bottom Navigation Dock */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-[4.25rem] bg-bg-card/95 backdrop-blur-md border-t border-border-main flex items-center justify-around px-1.5 pb-[env(safe-area-inset-bottom)] z-30">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-[4.25rem] glass-panel border-t border-border-main flex items-center justify-around px-1.5 pb-[env(safe-area-inset-bottom)] z-30">
         {menuItems.slice(0, 5).map((item) => {
           const isActive = pathname === item.path;
           const Icon = item.icon;
@@ -138,20 +118,16 @@ export default function Sidebar({ onLogout }: SidebarProps) {
               key={item.path}
               href={item.path}
               className={`flex flex-col items-center justify-center flex-1 h-full py-1 text-[10px] font-semibold transition-all relative ${
-                isActive ? 'text-orange-primary font-bold' : 'text-text-muted hover:text-gray-900'
+                isActive ? 'text-brand-primary font-bold' : 'text-text-muted hover:text-text-primary'
               }`}
             >
               {isActive && (
-                <motion.span
-                  layoutId="mobile-active-dot"
-                  className="absolute top-1.5 w-1 h-1 rounded-full bg-orange-primary"
-                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                />
+                <span className="absolute top-1.5 w-1 h-1 rounded-full bg-brand-primary" />
               )}
               <Icon
                 className="w-5 h-5 mb-1"
                 strokeWidth={isActive ? 2.5 : 2}
-                fill={isActive ? 'rgba(247, 147, 26, 0.15)' : 'none'}
+                fill={isActive ? 'rgba(255, 179, 195, 0.15)' : 'none'}
               />
               <span>{displayName}</span>
             </Link>
@@ -161,11 +137,11 @@ export default function Sidebar({ onLogout }: SidebarProps) {
         <Link
           href="/settings"
           className={`flex flex-col items-center justify-center flex-1 h-full py-1 text-[10px] font-semibold transition-all ${
-            pathname === '/settings' ? 'text-orange-primary font-bold' : 'text-text-muted hover:text-gray-900'
+            pathname === '/settings' ? 'text-brand-primary font-bold' : 'text-text-muted hover:text-text-primary'
           }`}
         >
           {pathname === '/settings' && (
-            <span className="absolute top-1.5 w-1 h-1 rounded-full bg-orange-primary" />
+            <span className="absolute top-1.5 w-1 h-1 rounded-full bg-brand-primary" />
           )}
           <Settings className="w-5 h-5 mb-1" strokeWidth={pathname === '/settings' ? 2.5 : 2} />
           <span>Perfil</span>

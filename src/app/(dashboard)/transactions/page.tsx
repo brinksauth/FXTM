@@ -21,7 +21,7 @@ export default function TransactionsPage() {
   const [sortField, setSortField] = useState<'date' | 'amount'>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [currentPage, setCurrentPage] = useState(1);
-  const [isPrivate, setIsPrivate] = useState(readPrivacyPreference);
+  const [isPrivate, setIsPrivate] = useState(true);
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -30,6 +30,7 @@ export default function TransactionsPage() {
       setIsPrivate(customEvent.detail);
     };
 
+    setIsPrivate(readPrivacyPreference());
     window.addEventListener(privacyEventName, handlePrivacyChange);
     return () => window.removeEventListener(privacyEventName, handlePrivacyChange);
   }, []);
@@ -55,7 +56,11 @@ export default function TransactionsPage() {
         if (sortField === 'date') {
           const timeA = new Date(a.date).getTime();
           const timeB = new Date(b.date).getTime();
-          return sortOrder === 'desc' ? timeB - timeA : timeA - timeB;
+          if (timeA !== timeB) {
+            return sortOrder === 'desc' ? timeB - timeA : timeA - timeB;
+          }
+          const priority = (type: string) => (type === 'Depósito' ? 0 : type === 'Ganancia' ? 1 : 2);
+          return priority(a.type) - priority(b.type);
         } else {
           return sortOrder === 'desc' ? b.amount - a.amount : a.amount - b.amount;
         }
@@ -95,7 +100,7 @@ export default function TransactionsPage() {
       {/* Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="font-display font-extrabold text-2xl md:text-3xl text-gray-900">
+          <h1 className="font-display font-extrabold text-2xl md:text-3xl text-text-primary">
             Historial de Transacciones
           </h1>
           <p className="text-text-muted text-xs sm:text-sm mt-1">
@@ -105,7 +110,7 @@ export default function TransactionsPage() {
 
         <button
           onClick={exportToCSV}
-          className="flex items-center justify-center gap-2 px-4 py-2.5 bg-bg-card border border-border-main hover:border-orange-primary/30 text-xs font-semibold text-text-muted hover:text-gray-900 rounded-xl transition-all"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 bg-bg-card border border-border-main hover:border-brand-primary/30 text-xs font-semibold text-text-muted hover:text-text-primary rounded-xl transition-all"
         >
           <Download className="w-4 h-4" />
           <span>Exportar Registro CSV</span>
@@ -125,7 +130,7 @@ export default function TransactionsPage() {
               setCurrentPage(1);
             }}
             placeholder="Buscar ref, ID, tipo o fecha..."
-            className="w-full bg-bg-main border border-border-main rounded-xl pl-9 pr-4 py-2.5 text-xs text-gray-800 focus:outline-none focus:border-orange-primary transition-colors"
+            className="w-full bg-bg-main border border-border-main rounded-xl pl-9 pr-4 py-2.5 text-xs text-text-primary focus:outline-none focus:border-brand-primary transition-colors"
           />
         </div>
 
@@ -141,8 +146,8 @@ export default function TransactionsPage() {
               }}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 filterType === t
-                  ? 'bg-orange-primary border border-orange-primary text-white shadow-glow'
-                  : 'bg-bg-main border border-border-main text-text-muted hover:text-gray-900'
+                  ? 'bg-brand-primary border border-brand-primary text-white shadow-glow'
+                  : 'bg-bg-main border border-border-main text-text-muted hover:text-text-primary'
               }`}
             >
               {t}
@@ -160,7 +165,7 @@ export default function TransactionsPage() {
                 <th className="p-4 sm:p-5">ID de Transacción</th>
                 <th
                   onClick={() => handleSort('date')}
-                  className="p-4 sm:p-5 cursor-pointer hover:text-gray-900 transition-colors select-none"
+                  className="p-4 sm:p-5 cursor-pointer hover:text-text-primary transition-colors select-none"
                 >
                   <span className="flex items-center gap-1">
                     Fecha y Hora
@@ -171,17 +176,17 @@ export default function TransactionsPage() {
                 <th className="p-4 sm:p-5">Estado</th>
                 <th
                   onClick={() => handleSort('amount')}
-                  className="p-4 sm:p-5 cursor-pointer hover:text-gray-900 transition-colors select-none"
+                  className="p-4 sm:p-5 cursor-pointer hover:text-text-primary transition-colors select-none"
                 >
                   <span className="flex items-center gap-1">
-                    Monto (COP)
+                    Monto (MXN)
                     <ArrowUpDown className="w-3.5 h-3.5" />
                   </span>
                 </th>
                 <th className="p-4 sm:p-5 hidden lg:table-cell">Referencia Hash</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border-main/55 font-medium text-gray-800">
+            <tbody className="divide-y divide-border-main/55 font-medium text-text-primary">
               {paginatedTxns.length > 0 ? (
                 paginatedTxns.map((tx) => {
                   const isDeposit = tx.type === 'Depósito';
@@ -197,7 +202,7 @@ export default function TransactionsPage() {
                               ? 'bg-blue-500/10 text-blue-500'
                               : isProfit
                               ? 'bg-green-500/10 text-green-500'
-                              : 'bg-orange-primary/10 text-orange-primary'
+                              : 'bg-brand-primary/10 text-brand-primary'
                           }`}
                         >
                           {isDeposit ? (
@@ -216,15 +221,15 @@ export default function TransactionsPage() {
                             tx.status === 'Completado'
                               ? 'bg-green-500'
                               : tx.status === 'Pendiente'
-                              ? 'bg-orange-primary animate-pulse'
+                              ? 'bg-brand-primary animate-pulse'
                               : 'bg-red-500'
                           }`}
                         />
                         <span className="text-[11px] text-text-muted">{tx.status}</span>
                       </td>
                       <td className="p-4 sm:p-5 font-mono font-bold text-sm">
-                        <span className={isProfit || isDeposit ? 'text-green-600' : 'text-orange-primary'}>
-                          {isProfit || isDeposit ? '+' : '-'}{isPrivate ? '••••' : `COP ${tx.amount.toLocaleString()}`}
+                        <span className={isProfit || isDeposit ? 'text-green-600' : 'text-brand-primary'}>
+                          {isProfit || isDeposit ? '+' : '-'}{isPrivate ? '••••' : `MXN ${tx.amount.toLocaleString()}`}
                         </span>
                         <span className="text-[9px] text-text-muted block mt-0.5 font-normal">
                           {tx.btcAmount ? (isPrivate ? '•••• BTC' : `${tx.btcAmount} BTC`) : '--'}
@@ -251,22 +256,22 @@ export default function TransactionsPage() {
         {totalPages > 1 && (
           <div className="p-4 bg-bg-main/30 border-t border-border-main flex items-center justify-between text-xs text-text-muted">
             <span>
-              Mostrando Página <span className="text-gray-900 font-bold">{currentPage}</span> de{' '}
-              <span className="text-gray-900 font-bold">{totalPages}</span>
+              Mostrando Página <span className="text-text-primary font-bold">{currentPage}</span> de{' '}
+              <span className="text-text-primary font-bold">{totalPages}</span>
             </span>
 
             <div className="flex gap-2">
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="p-1.5 rounded-lg border border-border-main bg-bg-main text-text-muted hover:text-gray-900 disabled:opacity-40 disabled:hover:text-text-muted transition-colors"
+                className="p-1.5 rounded-lg border border-border-main bg-bg-main text-text-muted hover:text-text-primary disabled:opacity-40 disabled:hover:text-text-muted transition-colors"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="p-1.5 rounded-lg border border-border-main bg-bg-main text-text-muted hover:text-gray-900 disabled:opacity-40 disabled:hover:text-text-muted transition-colors"
+                className="p-1.5 rounded-lg border border-border-main bg-bg-main text-text-muted hover:text-text-primary disabled:opacity-40 disabled:hover:text-text-muted transition-colors"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

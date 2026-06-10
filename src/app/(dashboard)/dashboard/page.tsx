@@ -4,15 +4,11 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
   PieChart,
   Pie,
-  Cell
+  Cell,
+  ResponsiveContainer,
+  Tooltip
 } from 'recharts';
 import {
   TrendingUp,
@@ -22,10 +18,10 @@ import {
   Clock
 } from 'lucide-react';
 import CountUp from '@/components/CountUp';
+import TradingChart from '@/components/TradingChart';
 import {
   mockUser,
   mockTransactions,
-  mockChartData,
   mockWeeklyPerformance,
   mockInsights
 } from '@/data/mockData';
@@ -33,20 +29,19 @@ import { privacyEventName, readPrivacyPreference } from '@/utils/privacy';
 
 // HSL color palette mapping
 const COLORS = [
-  '#F7931A', // Mon (Orange)
-  '#F3A647', // Tue
-  '#F9C280', // Wed
-  '#FFD29E', // Thu
-  '#FFA333', // Fri
-  '#E08212', // Sat
-  '#B86200', // Sun
+  '#ffb3c3', // Blush Pink
+  '#ff99ae', 
+  '#ff8099', 
+  '#ff6684', 
+  '#ff4d6f', 
+  '#ff335a', 
+  '#ff1a45', 
 ];
 
 export default function DashboardPage() {
   const [mounted, setMounted] = useState(false);
-  const [timeframe, setTimeframe] = useState<'1D' | '1W' | '1M' | '3M' | '1Y'>('1W');
   const [activeInsight, setActiveInsight] = useState(0);
-  const [isPrivate, setIsPrivate] = useState(readPrivacyPreference);
+  const [isPrivate, setIsPrivate] = useState(true);
 
   useEffect(() => {
     const frameId = requestAnimationFrame(() => setMounted(true));
@@ -57,6 +52,7 @@ export default function DashboardPage() {
     };
 
     window.addEventListener(privacyEventName, handlePrivacyChange);
+    setIsPrivate(readPrivacyPreference());
 
     // Rotate insights every 10s
     const interval = setInterval(() => {
@@ -70,15 +66,24 @@ export default function DashboardPage() {
     };
   }, []);
 
-  const chartData = mockChartData[timeframe];
-  const recentTransactions = mockTransactions.slice(0, 3);
+  const recentTransactions = mockTransactions.slice(0, 2);
+  const portfolioValue = new Intl.NumberFormat('es-MX', {
+    style: 'currency',
+    currency: 'MXN',
+    maximumFractionDigits: 0,
+  }).format(mockUser.portfolioValue);
+  const profitValue = new Intl.NumberFormat('es-MX', {
+    style: 'currency',
+    currency: 'MXN',
+    maximumFractionDigits: 0,
+  }).format(mockUser.profit);
 
   // Helper to format currency
   const formatCurrency = (val: number) => {
     if (isPrivate) return '••••';
-    return new Intl.NumberFormat('es-CO', {
+    return new Intl.NumberFormat('es-MX', {
       style: 'currency',
-      currency: 'COP',
+      currency: 'MXN',
       maximumFractionDigits: 0,
     }).format(val);
   };
@@ -92,21 +97,21 @@ export default function DashboardPage() {
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          className="lg:col-span-8 bg-bg-card border border-border-main rounded-3xl p-6 md:p-8 relative overflow-hidden group hover:border-orange-primary/30 transition-all duration-300"
+          className="lg:col-span-8 glass-panel border border-border-main rounded-3xl p-6 md:p-8 relative overflow-hidden group hover:border-brand-primary/30 transition-all duration-300"
         >
           {/* Subtle bg glow */}
-          <div className="absolute -top-12 -right-12 w-48 h-48 bg-orange-primary/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-12 -right-12 w-48 h-48 bg-brand-primary/5 rounded-full blur-3xl pointer-events-none" />
           
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <span className="text-xs font-semibold text-text-muted uppercase tracking-wider">
                 Valor Total de Activos del Portafolio
               </span>
-              <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-gray-900 mt-2">
-                <CountUp end={mockUser.portfolioValue} prefix="COP " decimals={0} />
+              <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-text-primary mt-2">
+                {portfolioValue}
               </h1>
               <div className="flex items-center gap-2 mt-3 text-xs">
-                <span className="flex items-center gap-1 font-bold text-green-600 bg-green-500/10 px-2 py-0.5 rounded-lg">
+                <span className="flex items-center gap-1 font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded-lg border border-green-500/20">
                   <TrendingUp className="w-3.5 h-3.5" />
                   +{mockUser.growthPercentage}%
                 </span>
@@ -121,19 +126,19 @@ export default function DashboardPage() {
                 <span className="text-[10px] font-semibold text-text-muted uppercase tracking-wider block">
                   Balance de Bitcoin
                 </span>
-                <span className="text-lg font-bold text-gray-900 block mt-1.5 font-mono">
+                <span className="text-lg font-bold text-text-primary block mt-1.5 font-mono">
                   <CountUp end={mockUser.btcHoldings} suffix=" BTC" decimals={2} />
                 </span>
                 <span className="text-[10px] text-text-muted mt-1 block">
-                  1 BTC = COP 64.102
+                  1 BTC = MXN 64.102
                 </span>
               </div>
               <div>
                 <span className="text-[10px] font-semibold text-text-muted uppercase tracking-wider block">
                   Ganancias de la Cuenta
                 </span>
-                <span className="text-lg font-bold text-green-600 block mt-1.5">
-                  <CountUp end={mockUser.profit} prefix="+COP " decimals={0} />
+                <span className="text-lg font-bold text-green-400 block mt-1.5">
+                  +{profitValue}
                 </span>
                 <span className="text-[10px] text-text-muted mt-1 block">
                   Rendimiento de Bloque Acumulado
@@ -148,17 +153,17 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="lg:col-span-4 bg-bg-card border border-border-main rounded-3xl p-6 md:p-8 flex flex-col justify-between hover:border-orange-primary/30 transition-all duration-300"
+          className="lg:col-span-4 glass-panel border border-border-main rounded-3xl p-6 md:p-8 flex flex-col justify-between hover:border-brand-primary/30 transition-all duration-300"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-text-muted uppercase tracking-wider">
               Nivel de Inversión
             </span>
-            <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
+            <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.6)]" />
           </div>
           
           <div className="mt-4">
-            <h3 className="font-display font-bold text-xl text-gray-900">
+            <h3 className="font-display font-bold text-xl text-text-primary">
               {mockUser.investmentService}
             </h3>
             <p className="text-text-muted text-xs mt-1">
@@ -173,13 +178,13 @@ export default function DashboardPage() {
               <span className="text-[10px] font-semibold text-text-muted uppercase tracking-wider">
                 ROI Objetivo Mensual
               </span>
-              <span className="text-sm font-bold text-orange-primary mt-1">
+              <span className="text-sm font-bold text-brand-primary mt-1">
                 28% - 32% Anual
               </span>
             </div>
             <Link
               href="/portfolio"
-              className="p-2.5 rounded-xl bg-bg-main border border-border-main hover:border-orange-primary/30 hover:text-orange-primary text-text-muted transition-all"
+              className="p-2.5 rounded-xl bg-bg-main border border-border-main hover:border-brand-primary/50 hover:text-brand-primary hover:shadow-[0_0_15px_rgba(255,179,195,0.2)] text-text-muted transition-all"
             >
               <ArrowRight className="w-4 h-4" />
             </Link>
@@ -190,99 +195,30 @@ export default function DashboardPage() {
       {/* Main Charts & Analytics Row */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
         
-        {/* Main Line Chart View */}
+        {/* Main Line Chart View (TradingView) */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="xl:col-span-8 bg-bg-card border border-border-main rounded-3xl p-6 flex flex-col justify-between"
+          className="xl:col-span-8 glass-panel border border-border-main rounded-3xl p-6 flex flex-col justify-between"
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6">
             <div>
-              <h3 className="font-display font-semibold text-base text-gray-900">
-                Rendimiento de Valor de Bitcoin
+              <h3 className="font-display font-semibold text-base text-text-primary">
+                Gráfico de TradingView en Vivo
               </h3>
               <p className="text-text-muted text-[11px] mt-0.5">
-                Valores de balance simulados que coinciden con índices globales de BTC
+                Datos de mercado en tiempo real y análisis técnico
               </p>
-            </div>
-            
-            {/* Timeframe Controls */}
-            <div className="flex bg-bg-main border border-border-main p-1 rounded-xl w-fit">
-              {(['1D', '1W', '1M', '3M', '1Y'] as const).map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setTimeframe(t)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                    timeframe === t
-                      ? 'bg-orange-primary text-white shadow-glow'
-                      : 'text-text-muted hover:text-gray-900'
-                  }`}
-                >
-                  {t}
-                </button>
-              ))}
             </div>
           </div>
 
-          {/* Area Chart Container */}
-          <div className="h-72 w-full text-xs">
+          {/* TradingChart Container */}
+          <div className="h-[400px] w-full text-xs rounded-xl overflow-hidden border border-border-main">
             {mounted ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData} margin={{ top: 10, right: 5, left: -25, bottom: 0 }}>
-                  <defs>
-                    <linearGradient id="colorOrange" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#FF7A00" stopOpacity={0.25} />
-                      <stop offset="95%" stopColor="#FF7A00" stopOpacity={0.0} />
-                    </linearGradient>
-                  </defs>
-                  <XAxis
-                    dataKey="date"
-                    stroke="#6B7280"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                  />
-                  <YAxis
-                    stroke="#6B7280"
-                    tickLine={false}
-                    axisLine={false}
-                    tickFormatter={(val) => isPrivate ? '••••' : `COP ${val / 1000}k`}
-                    tickMargin={8}
-                  />
-                  <Tooltip
-                    content={({ active, payload }) => {
-                      if (active && payload && payload.length) {
-                        const data = payload[0].payload;
-                        return (
-                          <div className="bg-bg-card border border-border-main p-3 rounded-xl shadow-lg">
-                            <span className="text-[10px] text-text-muted font-semibold uppercase tracking-wider block">
-                              {data.date}
-                            </span>
-                            <span className="text-xs font-bold text-gray-900 block mt-1">
-                              Portafolio: {isPrivate ? '••••' : formatCurrency(data.value)}
-                            </span>
-                            <span className="text-[10px] text-orange-primary font-medium block mt-0.5 font-mono">
-                              Precio BTC: COP {data.price.toLocaleString()}
-                            </span>
-                          </div>
-                        );
-                      }
-                      return null;
-                    }}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="value"
-                    stroke="#FF7A00"
-                    strokeWidth={2.5}
-                    fillOpacity={1}
-                    fill="url(#colorOrange)"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
+              <TradingChart />
             ) : (
-              <div className="w-full h-full animate-shimmer rounded-2xl" />
+              <div className="w-full h-full animate-shimmer" />
             )}
           </div>
         </motion.div>
@@ -292,10 +228,10 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="xl:col-span-4 bg-bg-card border border-border-main rounded-3xl p-6 flex flex-col justify-between"
+          className="xl:col-span-4 glass-panel border border-border-main rounded-3xl p-6 flex flex-col justify-between"
         >
           <div>
-            <h3 className="font-display font-semibold text-base text-gray-900">
+            <h3 className="font-display font-semibold text-base text-text-primary">
               Asignación Semanal
             </h3>
             <p className="text-text-muted text-[11px] mt-0.5">
@@ -315,6 +251,7 @@ export default function DashboardPage() {
                     outerRadius={80}
                     paddingAngle={3}
                     dataKey="percentage"
+                    stroke="rgba(42,35,79,0.5)"
                   >
                     {mockWeeklyPerformance.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -325,13 +262,13 @@ export default function DashboardPage() {
                       if (active && payload && payload.length) {
                         const data = payload[0].payload;
                         return (
-                          <div className="bg-bg-card border border-border-main p-2.5 rounded-xl text-xs shadow-md">
-                            <span className="font-bold text-gray-900 block">{data.day}</span>
-                            <span className="text-orange-primary block font-medium mt-0.5">
+                          <div className="glass-panel p-2.5 rounded-xl text-xs shadow-xl">
+                            <span className="font-bold text-text-primary block">{data.day}</span>
+                            <span className="text-brand-primary block font-medium mt-0.5">
                               {data.percentage}% Participación
                             </span>
                             <span className="text-[10px] text-text-muted mt-0.5 block">
-                              Ganado: {isPrivate ? '••••' : `COP ${data.amount}`}
+                              Ganado: {isPrivate ? '••••' : `MXN ${data.amount}`}
                             </span>
                           </div>
                         );
@@ -348,9 +285,9 @@ export default function DashboardPage() {
             {/* Center label */}
             <div className="absolute flex flex-col items-center">
               <span className="text-[10px] font-semibold text-text-muted uppercase tracking-wider">
-                Participación Total
+                Participación
               </span>
-              <span className="text-lg font-extrabold text-gray-900 mt-1">100%</span>
+              <span className="text-lg font-extrabold text-text-primary mt-1">100%</span>
             </div>
           </div>
 
@@ -379,18 +316,18 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
-          className="lg:col-span-5 bg-bg-card border border-border-main rounded-3xl p-6 md:p-8 flex flex-col justify-between hover:border-orange-primary/30 transition-all duration-300 relative overflow-hidden group"
+          className="lg:col-span-5 glass-panel border border-border-main rounded-3xl p-6 md:p-8 flex flex-col justify-between hover:border-brand-primary/30 transition-all duration-300 relative overflow-hidden group"
         >
-          <div className="absolute -top-12 -left-12 w-48 h-48 bg-orange-primary/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-12 -left-12 w-48 h-48 bg-brand-primary/5 rounded-full blur-3xl pointer-events-none" />
           
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-orange-primary/10 flex items-center justify-center text-orange-primary">
+            <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary">
               <Cpu className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-display font-semibold text-sm text-gray-900">Analizador de Libros Mayores por IA</h4>
-              <span className="text-[9px] font-semibold text-orange-primary uppercase tracking-wider">
-                Feed de Información en Vivo
+              <h4 className="font-display font-semibold text-sm text-text-primary">Analizador de Inteligencia de Mercado</h4>
+              <span className="text-[9px] font-semibold text-brand-primary uppercase tracking-wider">
+                Señales de IA en Vivo
               </span>
             </div>
           </div>
@@ -404,7 +341,7 @@ export default function DashboardPage() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.3 }}
-                className="text-xs text-foreground leading-relaxed font-medium"
+                className="text-xs text-text-primary leading-relaxed font-medium"
               >
                 &ldquo;{mockInsights[activeInsight]}&rdquo;
               </motion.p>
@@ -418,7 +355,7 @@ export default function DashboardPage() {
                 key={idx}
                 onClick={() => setActiveInsight(idx)}
                 className={`w-2 h-2 rounded-full transition-colors ${
-                  activeInsight === idx ? 'bg-orange-primary' : 'bg-border-main hover:bg-text-muted/40'
+                  activeInsight === idx ? 'bg-brand-primary shadow-[0_0_8px_rgba(255,179,195,0.8)]' : 'bg-border-main hover:bg-text-muted/40'
                 }`}
               />
             ))}
@@ -430,11 +367,11 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="lg:col-span-7 bg-bg-card border border-border-main rounded-3xl p-6 flex flex-col justify-between"
+          className="lg:col-span-7 glass-panel border border-border-main rounded-3xl p-6 flex flex-col justify-between"
         >
           <div className="flex items-center justify-between pb-4 border-b border-border-main/50">
             <div>
-              <h3 className="font-display font-semibold text-base text-gray-900">
+              <h3 className="font-display font-semibold text-base text-text-primary">
                 Transacciones Recientes
               </h3>
               <p className="text-text-muted text-[10px] mt-0.5">
@@ -444,7 +381,7 @@ export default function DashboardPage() {
             
             <Link
               href="/transactions"
-              className="text-xs font-semibold text-orange-primary hover:text-orange-hover flex items-center gap-1 transition-colors"
+              className="text-xs font-semibold text-brand-primary hover:text-brand-hover flex items-center gap-1 transition-colors"
             >
               Ver Todo
               <ArrowRight className="w-3.5 h-3.5" />
@@ -456,15 +393,15 @@ export default function DashboardPage() {
               const isDeposit = tx.type === 'Depósito';
               const isProfit = tx.type === 'Ganancia';
               return (
-                <div key={tx.id} className="py-3.5 flex items-center justify-between gap-4">
+                <div key={tx.id} className="py-3.5 flex items-center justify-between gap-4 group">
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-105 ${
                         isDeposit
-                          ? 'bg-blue-500/10 text-blue-500'
+                          ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
                           : isProfit
-                          ? 'bg-green-500/10 text-green-500'
-                          : 'bg-orange-primary/10 text-orange-primary'
+                          ? 'bg-green-500/10 text-green-400 border border-green-500/20'
+                          : 'bg-brand-primary/10 text-brand-primary border border-brand-primary/20'
                       }`}
                     >
                       {isDeposit ? (
@@ -476,7 +413,7 @@ export default function DashboardPage() {
                       )}
                     </div>
                     <div>
-                      <span className="text-xs font-bold text-gray-900 block">{tx.type}</span>
+                      <span className="text-xs font-bold text-text-primary block">{tx.type}</span>
                       <span className="text-[10px] text-text-muted block mt-0.5">{tx.date}</span>
                     </div>
                   </div>
@@ -484,10 +421,10 @@ export default function DashboardPage() {
                   <div className="text-right">
                     <span
                       className={`text-xs font-bold font-mono block ${
-                        isProfit || isDeposit ? 'text-green-600' : 'text-orange-primary'
+                        isProfit || isDeposit ? 'text-green-400' : 'text-brand-primary'
                       }`}
                     >
-                      {isProfit || isDeposit ? '+' : '-'}{isPrivate ? '••••' : `COP ${tx.amount.toLocaleString()}`}
+                      {isProfit || isDeposit ? '+' : '-'}{isPrivate ? '••••' : `MXN ${tx.amount.toLocaleString()}`}
                     </span>
                     <span className="text-[9px] text-text-muted block mt-0.5">
                       {tx.btcAmount ? (isPrivate ? '•••• BTC' : `${tx.btcAmount} BTC`) : '--'}

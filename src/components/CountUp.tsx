@@ -21,7 +21,7 @@ export default function CountUp({
   bypassPrivacy = false,
 }: CountUpProps) {
   const [count, setCount] = useState(0);
-  const [isPrivate, setIsPrivate] = useState(readPrivacyPreference);
+  const [isPrivate, setIsPrivate] = useState(() => readPrivacyPreference());
 
   useEffect(() => {
     const handlePrivacyChange = (e: Event) => {

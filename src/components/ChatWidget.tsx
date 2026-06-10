@@ -83,7 +83,7 @@ export default function ChatWidget() {
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="w-14 h-14 rounded-full bg-orange-primary flex items-center justify-center text-white shadow-lg shadow-orange-primary/20 glow-border hover:bg-orange-hover transition-colors relative"
+        className="w-14 h-14 rounded-full bg-brand-primary flex items-center justify-center text-white shadow-lg shadow-brand-primary/20 glow-border hover:bg-brand-hover transition-colors relative"
       >
         {isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
         {!isOpen && (
@@ -101,7 +101,7 @@ export default function ChatWidget() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 50 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="absolute bottom-18 right-0 w-[340px] sm:w-[380px] h-[480px] bg-white border border-border-main rounded-2xl shadow-2xl flex flex-col overflow-hidden text-gray-800"
+            className="absolute bottom-18 right-0 w-[calc(100vw-1.5rem)] sm:w-[380px] max-w-[380px] h-[70vh] max-h-[480px] app-surface rounded-2xl shadow-2xl flex flex-col overflow-hidden text-text-primary"
           >
             {/* Header */}
             <div className="p-4 bg-bg-main border-b border-border-main flex items-center justify-between">
@@ -112,20 +112,20 @@ export default function ChatWidget() {
                     alt="Agente Alex"
                     width={40}
                     height={40}
-                    className="w-10 h-10 rounded-xl object-cover border border-orange-primary/20 bg-orange-primary/10"
+                    className="w-10 h-10 rounded-xl object-cover border border-brand-primary/20 bg-brand-primary/10"
                   />
                   <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-bg-card" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-sm text-gray-900">Agente Alex</h4>
-                  <span className="text-[10px] text-orange-primary font-semibold uppercase tracking-wider">
+                  <h4 className="font-semibold text-sm text-text-primary">Agente Alex</h4>
+                  <span className="text-[10px] text-brand-primary font-semibold uppercase tracking-wider">
                     Gerente de cuenta dedicado
                   </span>
                 </div>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-text-muted hover:text-gray-900 transition-colors"
+                className="text-text-muted hover:text-text-primary transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -146,8 +146,8 @@ export default function ChatWidget() {
                     <div
                       className={`max-w-[80%] rounded-2xl p-3 text-xs leading-relaxed ${
                         isUser
-                          ? 'bg-orange-primary text-white rounded-tr-none shadow-md shadow-orange-primary/10'
-                          : 'bg-white border border-border-main text-gray-800 rounded-tl-none shadow-sm'
+                          ? 'bg-brand-primary text-white rounded-tr-none shadow-md shadow-brand-primary/10'
+                          : 'bg-bg-main/40 border border-border-main text-text-primary rounded-tl-none shadow-sm'
                       }`}
                     >
                       <p className="whitespace-pre-line break-words">{msg.text}</p>
@@ -185,7 +185,7 @@ export default function ChatWidget() {
 
               {isTyping && (
                 <div className="flex justify-start">
-                  <div className="bg-white border border-border-main rounded-2xl rounded-tl-none p-3 text-xs flex items-center gap-1 shadow-sm">
+                  <div className="bg-bg-main/40 border border-border-main rounded-2xl rounded-tl-none p-3 text-xs flex items-center gap-1 shadow-sm">
                     <span className="text-text-muted">Alex está escribiendo</span>
                     <span className="w-1.5 h-1.5 bg-text-muted rounded-full animate-bounce delay-100" />
                     <span className="w-1.5 h-1.5 bg-text-muted rounded-full animate-bounce delay-200" />
@@ -205,11 +205,11 @@ export default function ChatWidget() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Escribe tu mensaje..."
-                className="flex-1 bg-white border border-border-main rounded-xl px-3 py-2.5 text-xs text-gray-800 focus:outline-none focus:border-orange-primary transition-colors"
+                className="flex-1 bg-bg-main border border-border-main rounded-xl px-3 py-2.5 text-xs text-text-primary focus:outline-none focus:border-brand-primary transition-colors"
               />
               <button
                 type="submit"
-                className="p-2.5 rounded-xl bg-orange-primary text-white hover:bg-orange-hover transition-colors shadow-md shadow-orange-primary/10"
+                className="p-2.5 rounded-xl bg-brand-primary text-white hover:bg-brand-hover transition-colors shadow-md shadow-brand-primary/10"
               >
                 <Send className="w-4 h-4" />
               </button>

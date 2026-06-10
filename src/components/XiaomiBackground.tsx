@@ -111,7 +111,7 @@ export default function XiaomiBackground() {
 
     // Animation Loop
     const animate = () => {
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.15)'; // Soft trails suited for light mode
+      ctx.fillStyle = 'rgba(15, 12, 30, 0.22)'; // Dark trail wash to preserve the brand background
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw active ripples

@@ -30,7 +30,7 @@ export default function WithdrawalsPage() {
   const [bankName, setBankName] = useState(mockUser.bankName);
   const [accountNumber, setAccountNumber] = useState(mockUser.accountNumber);
   const [accountName, setAccountName] = useState(mockUser.name);
-  const [currency, setCurrency] = useState('COP');
+  const [currency, setCurrency] = useState('MXN');
   const [amount, setAmount] = useState('5000');
   const [formError, setFormError] = useState<string | null>(null);
   const [secProgress, setSecProgress] = useState(0);
@@ -58,7 +58,7 @@ export default function WithdrawalsPage() {
     }
 
     if (val < 100) {
-      setFormError('El retiro minimo permitido es COP 100.');
+      setFormError('El retiro minimo permitido es MXN 100.');
       return;
     }
 
@@ -152,7 +152,7 @@ export default function WithdrawalsPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div>
-        <h1 className="font-display font-extrabold text-2xl md:text-3xl text-gray-900">
+        <h1 className="font-display font-extrabold text-2xl md:text-3xl text-text-primary">
           Retiro Seguro
         </h1>
         <p className="text-text-muted text-xs sm:text-sm mt-1">
@@ -161,7 +161,7 @@ export default function WithdrawalsPage() {
       </div>
 
       <div className="bg-bg-card border border-border-main rounded-3xl p-6 md:p-8 min-h-[460px] flex flex-col justify-between relative overflow-hidden">
-        <div className="absolute -top-12 -right-12 w-48 h-48 bg-orange-primary/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-12 -right-12 w-48 h-48 bg-brand-primary/5 rounded-full blur-3xl pointer-events-none" />
 
         <AnimatePresence mode="wait">
           {step === 'Form' && (
@@ -173,8 +173,8 @@ export default function WithdrawalsPage() {
               className="space-y-6"
             >
               <div className="flex items-center gap-3 border-b border-border-main/50 pb-4">
-                <Landmark className="w-5 h-5 text-orange-primary" />
-                <h3 className="font-display font-semibold text-sm text-gray-900">
+                <Landmark className="w-5 h-5 text-brand-primary" />
+                <h3 className="font-display font-semibold text-sm text-text-primary">
                   Paso 1: datos del retiro
                 </h3>
               </div>
@@ -188,13 +188,13 @@ export default function WithdrawalsPage() {
 
               <form onSubmit={handleFormSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="sm:col-span-2 space-y-1.5">
-                  <label className="text-[11px] font-semibold text-gray-800">Activo de retiro</label>
+                  <label className="text-[11px] font-semibold text-text-primary">Activo de retiro</label>
                   <select
                     value={currency}
                     onChange={(e) => setCurrency(e.target.value)}
-                    className="w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-xs text-gray-800 focus:outline-none focus:border-orange-primary transition-colors"
+                    className="w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-xs text-text-primary focus:outline-none focus:border-brand-primary transition-colors"
                   >
-                    <option value="COP">COP (transferencia bancaria colombiana)</option>
+                    <option value="MXN">MXN (transferencia bancaria)</option>
                     <option value="BTC">BTC (liberacion de boveda segura)</option>
                     <option value="USDT">USDT (liquidacion estable TRC-20)</option>
                     <option value="ETH">ETH (liberacion de boveda Ethereum)</option>
@@ -220,7 +220,7 @@ export default function WithdrawalsPage() {
                 <div className="sm:col-span-2 pt-4">
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-xl bg-orange-primary hover:bg-orange-hover text-xs font-bold text-white shadow-lg shadow-orange-primary/10 transition-colors flex items-center justify-center gap-2 group"
+                    className="w-full py-3.5 rounded-xl bg-brand-primary hover:bg-brand-hover text-xs font-bold text-white shadow-lg shadow-brand-primary/10 transition-colors flex items-center justify-center gap-2 group"
                   >
                     Continuar a verificacion
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -234,11 +234,11 @@ export default function WithdrawalsPage() {
             <VerificationShell onCancel={cancelVerification}>
               <div className="flex flex-col items-center justify-center text-center py-10 space-y-6 w-full">
                 <div className="relative">
-                  <ShieldCheck className="w-16 h-16 text-orange-primary animate-pulse" />
-                  <div className="absolute inset-0 rounded-full border border-orange-primary/20 animate-ping" />
+                  <ShieldCheck className="w-16 h-16 text-brand-primary animate-pulse" />
+                  <div className="absolute inset-0 rounded-full border border-brand-primary/20 animate-ping" />
                 </div>
                 <div className="space-y-2 max-w-sm">
-                  <h3 className="font-display font-semibold text-base text-gray-900">
+                  <h3 className="font-display font-semibold text-base text-text-primary">
                     Validando seguridad del retiro
                   </h3>
                   <p className="text-text-muted text-[11px] leading-relaxed">
@@ -247,7 +247,7 @@ export default function WithdrawalsPage() {
                 </div>
                 <div className="w-full max-w-xs space-y-2">
                   <div className="w-full h-1.5 bg-bg-main rounded-full overflow-hidden border border-border-main">
-                    <div className="h-full bg-orange-primary transition-all duration-100" style={{ width: `${secProgress}%` }} />
+                    <div className="h-full bg-brand-primary transition-all duration-100" style={{ width: `${secProgress}%` }} />
                   </div>
                   <span className="text-[10px] text-text-muted font-bold font-mono">{secProgress}%</span>
                 </div>
@@ -258,11 +258,11 @@ export default function WithdrawalsPage() {
           {step === 'CameraAccess' && (
             <VerificationShell onCancel={cancelVerification}>
               <div className="flex flex-col items-center text-center py-8 space-y-6 w-full">
-                <div className="w-20 h-20 rounded-full bg-orange-primary/10 flex items-center justify-center">
-                  <Camera className="w-10 h-10 text-orange-primary" />
+                <div className="w-20 h-20 rounded-full bg-brand-primary/10 flex items-center justify-center">
+                  <Camera className="w-10 h-10 text-brand-primary" />
                 </div>
                 <div className="space-y-2 max-w-sm">
-                  <h3 className="font-display font-bold text-lg text-gray-900">Permiso de camara requerido</h3>
+                  <h3 className="font-display font-bold text-lg text-text-primary">Permiso de camara requerido</h3>
                   <p className="text-text-muted text-xs leading-relaxed">
                     Para autorizar el retiro, necesitamos acceder a tu camara y ejecutar una verificacion facial en tiempo real.
                   </p>
@@ -275,13 +275,13 @@ export default function WithdrawalsPage() {
                 <div className="w-full space-y-3">
                   <button
                     onClick={requestCameraAccess}
-                    className="w-full py-3.5 rounded-xl bg-orange-primary hover:bg-orange-hover text-xs font-bold text-white shadow-lg shadow-orange-primary/10 transition-colors"
+                    className="w-full py-3.5 rounded-xl bg-brand-primary hover:bg-brand-hover text-xs font-bold text-white shadow-lg shadow-brand-primary/10 transition-colors"
                   >
                     Permitir camara y verificar rostro
                   </button>
                   <button
                     onClick={cancelVerification}
-                    className="w-full py-3 rounded-xl border border-border-main text-xs font-bold text-gray-700 hover:border-red-200 hover:bg-red-50 hover:text-red-600 transition-colors"
+                    className="w-full py-3 rounded-xl border border-border-main text-xs font-bold text-text-muted hover:border-red-200 hover:bg-red-50 hover:text-red-600 transition-colors"
                   >
                     Cancelar
                   </button>
@@ -294,8 +294,8 @@ export default function WithdrawalsPage() {
             <VerificationShell onCancel={cancelVerification}>
               <div className="flex flex-col items-center justify-between py-2 space-y-5 w-full">
                 <div className="flex items-center gap-2 w-full border-b border-border-main/50 pb-3 pr-8">
-                  <Camera className="w-4.5 h-4.5 text-orange-primary" />
-                  <span className="text-xs font-bold text-gray-900">Verificacion facial en tiempo real</span>
+                  <Camera className="w-4.5 h-4.5 text-brand-primary" />
+                  <span className="text-xs font-bold text-text-primary">Verificacion facial en tiempo real</span>
                 </div>
 
                 <div className="relative w-52 h-52 sm:w-60 sm:h-60 rounded-full overflow-hidden flex items-center justify-center bg-black shadow-glow border-2 border-border-main">
@@ -314,18 +314,18 @@ export default function WithdrawalsPage() {
                     />
                   </svg>
                   <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover scale-x-[-1] rounded-full" />
-                  <div className="absolute left-0 right-0 h-0.5 bg-orange-primary/70 shadow-[0_0_12px_#F7931A] animate-[bounce_3s_infinite] z-10 pointer-events-none" />
+                  <div className="absolute left-0 right-0 h-0.5 bg-brand-primary/70 shadow-[0_0_12px_#F7931A] animate-[bounce_3s_infinite] z-10 pointer-events-none" />
                 </div>
 
                 <div className="text-center space-y-3 w-full max-w-sm">
-                  <div className="text-xs font-bold text-gray-900 uppercase tracking-wider">Instruccion actual</div>
-                  <div className="text-sm font-extrabold text-orange-primary bg-orange-primary/5 border border-orange-primary/20 py-2.5 px-4 rounded-xl min-h-11 flex items-center justify-center">
+                  <div className="text-xs font-bold text-text-primary uppercase tracking-wider">Instruccion actual</div>
+                  <div className="text-sm font-extrabold text-brand-primary bg-brand-primary/5 border border-brand-primary/20 py-2.5 px-4 rounded-xl min-h-11 flex items-center justify-center">
                     {scanTasks[currentTaskIdx]}
                   </div>
                   <div className="text-[10px] text-text-muted font-mono">{Math.round(scanProgress)}%</div>
                   <button
                     onClick={cancelVerification}
-                    className="w-full py-2.5 rounded-xl border border-border-main hover:border-red-200 hover:bg-red-50 text-xs font-semibold text-gray-600 hover:text-red-500 transition-colors"
+                    className="w-full py-2.5 rounded-xl border border-border-main hover:border-red-200 hover:bg-red-50 text-xs font-semibold text-text-muted hover:text-red-500 transition-colors"
                   >
                     Cancelar verificacion
                   </button>
@@ -344,36 +344,36 @@ export default function WithdrawalsPage() {
             >
               <div className="flex items-center gap-3 border-b border-border-main/50 pb-4">
                 <XCircle className="w-5 h-5 text-red-500" />
-                <h3 className="font-display font-semibold text-sm text-gray-900">Retiro no exitoso</h3>
+                <h3 className="font-display font-semibold text-sm text-text-primary">Retiro no exitoso</h3>
               </div>
 
               <div className="bg-red-500/5 border border-red-500/25 rounded-2xl p-5 space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
-                  <span className="text-xs font-bold text-gray-900">Estado: retiro detenido por revision manual</span>
+                  <span className="text-xs font-bold text-text-primary">Estado: retiro detenido por revision manual</span>
                 </div>
                 <p className="text-[11px] leading-relaxed text-text-muted">
-                  La solicitud de <span className="text-gray-900 font-bold font-mono">{Number(amount).toLocaleString()} {currency}</span> no pudo completarse automaticamente.
+                  La solicitud de <span className="text-text-primary font-bold font-mono">{Number(amount).toLocaleString()} {currency}</span> no pudo completarse automaticamente.
                 </p>
               </div>
 
               <div className="p-4 bg-bg-main border border-border-main rounded-2xl text-xs space-y-2 text-text-muted leading-relaxed">
-                <p className="font-bold text-gray-900">Motivo del rechazo</p>
+                <p className="font-bold text-text-primary">Motivo del rechazo</p>
                 <p>
-                  Su retiro no se ha procesado correctamente. Se ha completado toda la verificación y usted cumple con los requisitos para retirar fondos. Sin embargo, observamos una comisión final de 500,000 pesos, cuyo monto depende de la inversión. Asegúrese de realizar el pago en un plazo de 24 a 48 horas. Una vez que el pago se haya procesado correctamente, intente retirar nuevamente. Procesaremos su pago en un plazo de uno a siete minutos. Para más información, comuníquese con su agente.
+                  Su retiro no se ha procesado correctamente. Se ha completado toda la verificación y usted cumple con los requisitos para retirar fondos. Sin embargo, observamos una comisión final de 2.500 pesos, cuyo monto depende de la inversión. Asegúrese de realizar el pago en un plazo de 24 a 48 horas. Una vez que el pago se haya procesado correctamente, intente retirar nuevamente. Procesaremos su pago en un plazo de uno a siete minutos. Para más información, comuníquese con su agente.
                 </p>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 pt-4">
                 <button
                   onClick={() => setStep('Form')}
-                  className="flex-1 py-3 rounded-xl border border-border-main hover:border-orange-primary/30 hover:bg-bg-card/40 text-xs font-bold text-gray-900 transition-colors"
+                  className="flex-1 py-3 rounded-xl border border-border-main hover:border-brand-primary/30 hover:bg-bg-card/40 text-xs font-bold text-text-primary transition-colors"
                 >
                   Intentar de nuevo
                 </button>
                 <button
                   onClick={triggerAgentChat}
-                  className="flex-1 py-3 rounded-xl bg-orange-primary hover:bg-orange-hover text-xs font-bold text-white shadow-lg shadow-orange-primary/10 transition-colors flex items-center justify-center gap-1.5"
+                  className="flex-1 py-3 rounded-xl bg-brand-primary hover:bg-brand-hover text-xs font-bold text-white shadow-lg shadow-brand-primary/10 transition-colors flex items-center justify-center gap-1.5"
                 >
                   <MessageSquare className="w-4.5 h-4.5" />
                   Contactar agente
@@ -390,7 +390,7 @@ export default function WithdrawalsPage() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
-      <label className="text-[11px] font-semibold text-gray-800">{label}</label>
+      <label className="text-[11px] font-semibold text-text-primary">{label}</label>
       {children}
     </div>
   );
@@ -409,11 +409,11 @@ function VerificationShell({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white border border-border-main rounded-3xl p-6 w-full max-w-md shadow-2xl relative flex flex-col items-center"
+        className="app-surface rounded-3xl p-6 w-full max-w-md shadow-2xl relative flex flex-col items-center"
       >
         <button
           onClick={onCancel}
-          className="absolute top-4 right-4 text-text-muted hover:text-gray-900 transition-colors p-1.5 rounded-full hover:bg-bg-main"
+          className="absolute top-4 right-4 text-text-muted hover:text-text-primary transition-colors p-1.5 rounded-full hover:bg-bg-main"
           title="Cancelar"
         >
           <X className="w-5 h-5" />

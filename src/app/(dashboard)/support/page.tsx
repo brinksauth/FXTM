@@ -49,7 +49,7 @@ export default function SupportPage() {
     <div className="space-y-8">
       {/* Title */}
       <div>
-        <h1 className="font-display font-extrabold text-2xl md:text-3xl text-gray-900">
+        <h1 className="font-display font-extrabold text-2xl md:text-3xl text-text-primary">
           Centro de Soporte
         </h1>
         <p className="text-text-muted text-xs sm:text-sm mt-1">
@@ -66,19 +66,19 @@ export default function SupportPage() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-bg-card border border-border-main rounded-3xl p-6 md:p-8 flex flex-col lg:flex-row items-center justify-between gap-6 hover:border-orange-primary/20 transition-colors relative overflow-hidden shadow-sm"
+            className="bg-bg-card border border-border-main rounded-3xl p-6 md:p-8 flex flex-col lg:flex-row items-center justify-between gap-6 hover:border-brand-primary/20 transition-colors relative overflow-hidden shadow-sm"
           >
-            <div className="absolute -top-12 -right-12 w-48 h-48 bg-orange-primary/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -top-12 -right-12 w-48 h-48 bg-brand-primary/5 rounded-full blur-3xl pointer-events-none" />
             
             <div className="flex items-center gap-4 text-center sm:text-left flex-col sm:flex-row w-full lg:w-auto">
               <div className="relative flex-shrink-0">
-                <div className="w-14 h-14 rounded-2xl bg-orange-primary/10 border border-orange-primary/30 flex items-center justify-center text-orange-primary font-bold font-display text-lg">
+                <div className="w-14 h-14 rounded-2xl bg-brand-primary/10 border border-brand-primary/30 flex items-center justify-center text-brand-primary font-bold font-display text-lg">
                   A
                 </div>
                 <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-bg-card animate-pulse" />
               </div>
               <div>
-                <h3 className="font-display font-bold text-gray-900 text-base">Línea Directa: Agente Alex</h3>
+                <h3 className="font-display font-bold text-text-primary text-base">Línea Directa: Agente Alex</h3>
                 <p className="text-text-muted text-xs mt-1 leading-normal">
                   En línea ahora. Haz clic para iniciar una sesión encriptada en vivo sobre los depósitos de tu bóveda.
                 </p>
@@ -88,7 +88,7 @@ export default function SupportPage() {
             <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
               <button
                 onClick={triggerAgentChat}
-                className="px-5 py-3 rounded-xl bg-orange-primary hover:bg-orange-hover text-xs font-bold text-white shadow-lg shadow-orange-primary/10 transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap"
+                className="px-5 py-3 rounded-xl bg-brand-primary hover:bg-brand-hover text-xs font-bold text-white shadow-lg shadow-brand-primary/10 transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap"
               >
                 <MessageSquare className="w-4.5 h-4.5" />
                 Abrir chat con agente
@@ -121,13 +121,13 @@ export default function SupportPage() {
                   <div className="w-12 h-12 rounded-full bg-green-500/10 border border-green-500 flex items-center justify-center text-green-600 mb-4">
                     <FileCheck className="w-6 h-6 animate-bounce" />
                   </div>
-                  <h4 className="font-display font-bold text-gray-900 text-base">Ticket de Soporte Creado</h4>
+                  <h4 className="font-display font-bold text-text-primary text-base">Ticket de Soporte Creado</h4>
                   <p className="text-text-muted text-xs max-w-xs mt-2">
-                    Tu solicitud ha sido registrada bajo el ID <span className="text-orange-primary font-mono font-bold">{ticketId}</span>. Alex hará un seguimiento en menos de 2 horas.
+                    Tu solicitud ha sido registrada bajo el ID <span className="text-brand-primary font-mono font-bold">{ticketId}</span>. Alex hará un seguimiento en menos de 2 horas.
                   </p>
                   <button
                     onClick={() => setTicketSuccess(false)}
-                    className="mt-6 px-4 py-2 text-xs font-semibold text-text-muted hover:text-gray-900 border border-border-main rounded-lg"
+                    className="mt-6 px-4 py-2 text-xs font-semibold text-text-muted hover:text-text-primary border border-border-main rounded-lg"
                   >
                     Crear Otro Ticket
                   </button>
@@ -136,7 +136,7 @@ export default function SupportPage() {
             </AnimatePresence>
 
             <div className="pb-4 border-b border-border-main/50 mb-6">
-              <h3 className="font-display font-semibold text-sm text-gray-900">Crear Ticket de Soporte</h3>
+              <h3 className="font-display font-semibold text-sm text-text-primary">Crear Ticket de Soporte</h3>
               <p className="text-[11px] text-text-muted mt-0.5">
                 Envía una consulta directamente a nuestros departamentos de cumplimiento y auditoría
               </p>
@@ -149,7 +149,7 @@ export default function SupportPage() {
                   <select
                     value={department}
                     onChange={(e) => setDepartment(e.target.value)}
-                    className="w-full bg-bg-main border border-border-main rounded-xl px-3.5 py-3 text-xs text-gray-900 focus:outline-none focus:border-orange-primary"
+                    className="w-full bg-bg-main border border-border-main rounded-xl px-3.5 py-3 text-xs text-text-primary focus:outline-none focus:border-brand-primary"
                   >
                     <option>Operaciones de Bóveda</option>
                     <option>Auditorías de Cumplimiento</option>
@@ -165,7 +165,7 @@ export default function SupportPage() {
                     onChange={(e) => setSubject(e.target.value)}
                     placeholder="Breve resumen"
                     required
-                    className="w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-xs text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-orange-primary"
+                    className="w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary"
                   />
                 </div>
               </div>
@@ -178,14 +178,14 @@ export default function SupportPage() {
                   placeholder="Describe tu problema o los detalles de coordinación del depósito..."
                   rows={4}
                   required
-                  className="w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-xs text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-orange-primary resize-none"
+                  className="w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary resize-none"
                 />
               </div>
 
               <div className="flex justify-end pt-2">
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-orange-primary hover:bg-orange-hover text-xs font-bold text-white shadow-lg shadow-orange-primary/10 rounded-xl transition-colors flex items-center gap-1.5"
+                  className="px-6 py-3 bg-brand-primary hover:bg-brand-hover text-xs font-bold text-white shadow-lg shadow-brand-primary/10 rounded-xl transition-colors flex items-center gap-1.5"
                 >
                   <Send className="w-4 h-4" />
                   Enviar Ticket
@@ -198,9 +198,9 @@ export default function SupportPage() {
         {/* FAQ Database Panel */}
         <div className="lg:col-span-5 bg-bg-card border border-border-main rounded-3xl p-6 md:p-8 shadow-sm">
           <div className="pb-4 border-b border-border-main/50 mb-6 flex items-center gap-2">
-            <LifeBuoy className="w-5 h-5 text-orange-primary" />
+            <LifeBuoy className="w-5 h-5 text-brand-primary" />
             <div>
-              <h3 className="font-display font-semibold text-sm text-gray-900">Base de Preguntas Frecuentes</h3>
+              <h3 className="font-display font-semibold text-sm text-text-primary">Base de Preguntas Frecuentes</h3>
               <p className="text-[11px] text-text-muted mt-0.5">
                 Soluciones rápidas de nuestra base de conocimientos
               </p>
@@ -217,15 +217,15 @@ export default function SupportPage() {
                 >
                   <button
                     onClick={() => toggleFaq(index)}
-                    className="w-full flex items-center justify-between p-3.5 text-left font-semibold text-[11px] text-gray-800 hover:text-orange-primary transition-colors focus:outline-none"
+                    className="w-full flex items-center justify-between p-3.5 text-left font-semibold text-[11px] text-text-primary hover:text-brand-primary transition-colors focus:outline-none"
                   >
                     <span className="flex items-center gap-2">
-                      <HelpCircle className="w-4 h-4 text-orange-primary flex-shrink-0" />
+                      <HelpCircle className="w-4 h-4 text-brand-primary flex-shrink-0" />
                       {faq.question}
                     </span>
                     <ChevronDown
                       className={`w-4 h-4 text-text-muted transition-transform duration-300 ${
-                        isOpen ? 'rotate-180 text-orange-primary' : ''
+                        isOpen ? 'rotate-180 text-brand-primary' : ''
                       }`}
                     />
                   </button>

@@ -1,10 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#0F172A"/>
-  <path d="M16 15h32l11 16-27 33L5 31z" fill="#F7931A"/>
-  <path d="M16 15h32l11 16H5z" fill="#FFB454"/>
-  <path d="M25 15 17 31l15 33 15-33-8-16z" fill="#FFD08A"/>
-  <path d="M17 31h30L32 64z" fill="#F7931A"/>
-  <path d="M5 31h59" stroke="#0F172A" stroke-width="4" stroke-linecap="round"/>
-  <path d="M25 15 17 31l15 33 15-33-8-16" fill="none" stroke="#0F172A" stroke-width="4" stroke-linejoin="round"/>
-  <path d="M16 15h32l11 16-27 33L5 31z" fill="none" stroke="#0F172A" stroke-width="4" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Subtle warm gradient evoking Mexican sunset over deep blue night -->
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1939" />
+      <stop offset="100%" stop-color="#2a234f" />
+    </linearGradient>
+    <linearGradient id="gem-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffb3c3" />
+      <stop offset="100%" stop-color="#ff99ae" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" rx="128" fill="url(#bg-grad)" />
+
+  <g transform="translate(128, 116)" filter="url(#glow)">
+    <!-- Abstract geometric gem structure -->
+    <path d="M128 0 L256 128 L128 280 L0 128 Z" fill="url(#gem-grad)" opacity="0.9" />
+    <!-- Inner facets to add depth -->
+    <path d="M128 0 L256 128 L128 170 Z" fill="#ffffff" opacity="0.3" />
+    <path d="M128 0 L0 128 L128 170 Z" fill="#ffffff" opacity="0.1" />
+    <path d="M0 128 L128 170 L128 280 Z" fill="#1e1939" opacity="0.3" />
+    <!-- Floating abstract element representing trade/ascension -->
+    <circle cx="128" cy="140" r="32" fill="#1e1939" opacity="0.5" />
+    <circle cx="128" cy="140" r="16" fill="#ffb3c3" />
+  </g>
 </svg>

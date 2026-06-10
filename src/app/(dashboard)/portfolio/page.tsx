@@ -47,7 +47,7 @@ export default function PortfolioPage() {
   const [mounted, setMounted] = useState(false);
   const [calcMonths, setCalcMonths] = useState(12);
   const [calcPrincipal, setCalcPrincipal] = useState(50000);
-  const [isPrivate, setIsPrivate] = useState(readPrivacyPreference);
+  const [isPrivate, setIsPrivate] = useState(true);
 
   useEffect(() => {
     const frameId = requestAnimationFrame(() => setMounted(true));
@@ -58,6 +58,7 @@ export default function PortfolioPage() {
     };
 
     window.addEventListener(privacyEventName, handlePrivacyChange);
+    setIsPrivate(readPrivacyPreference());
     return () => {
       cancelAnimationFrame(frameId);
       window.removeEventListener(privacyEventName, handlePrivacyChange);
@@ -76,7 +77,7 @@ export default function PortfolioPage() {
       {/* Portfolio Title Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="font-display font-extrabold text-2xl md:text-3xl text-gray-900">
+          <h1 className="font-display font-extrabold text-2xl md:text-3xl text-text-primary">
             Análisis del Portafolio
           </h1>
           <p className="text-text-muted text-xs sm:text-sm mt-1">
@@ -85,7 +86,7 @@ export default function PortfolioPage() {
         </div>
 
         <div className="flex items-center gap-2 px-3 py-2 bg-bg-card border border-border-main rounded-xl text-xs font-semibold text-text-muted">
-          <Calendar className="w-4 h-4 text-orange-primary" />
+          <Calendar className="w-4 h-4 text-brand-primary" />
           <span>Estado de Sincronización: Tiempo real</span>
         </div>
       </div>
@@ -101,14 +102,14 @@ export default function PortfolioPage() {
         >
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-orange-primary/10 border border-orange-primary/20 flex items-center justify-center text-orange-primary">
+              <div className="w-12 h-12 rounded-xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center text-brand-primary">
                 <Award className="w-6 h-6 animate-pulse" />
               </div>
               <div>
-                <span className="text-[10px] font-bold text-orange-primary uppercase tracking-wider block">
+                <span className="text-[10px] font-bold text-brand-primary uppercase tracking-wider block">
                   Servicio de Inversion Activo
                 </span>
-                <h2 className="font-display font-extrabold text-lg text-gray-900 mt-0.5">
+                <h2 className="font-display font-extrabold text-lg text-text-primary mt-0.5">
                   {activePlanDetails.name}
                 </h2>
               </div>
@@ -124,7 +125,7 @@ export default function PortfolioPage() {
               <span className="text-[10px] text-text-muted uppercase tracking-wider block">
                 ROI Anual Objetivo
               </span>
-              <span className="text-sm font-bold text-gray-900 block mt-1">
+              <span className="text-sm font-bold text-text-primary block mt-1">
                 {activePlanDetails.roi}
               </span>
             </div>
@@ -132,7 +133,7 @@ export default function PortfolioPage() {
               <span className="text-[10px] text-text-muted uppercase tracking-wider block">
                 Duración de Bloqueo del Plan
               </span>
-              <span className="text-sm font-bold text-gray-900 block mt-1">
+              <span className="text-sm font-bold text-text-primary block mt-1">
                 {activePlanDetails.duration}
               </span>
             </div>
@@ -140,18 +141,18 @@ export default function PortfolioPage() {
               <span className="text-[10px] text-text-muted uppercase tracking-wider block">
                 Estado del Depósito
               </span>
-              <span className="text-sm font-bold text-orange-primary block mt-1">
+              <span className="text-sm font-bold text-brand-primary block mt-1">
                 Asegurado en Frío
               </span>
             </div>
           </div>
 
           <div className="border-t border-border-main/50 pt-5">
-            <h4 className="text-xs font-semibold text-gray-900 mb-3">Beneficios del Servicio Incluidos</h4>
+            <h4 className="text-xs font-semibold text-text-primary mb-3">Beneficios del Servicio Incluidos</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-text-muted">
               {activePlanDetails.features.map((feat, idx) => (
                 <div key={idx} className="flex items-center gap-2">
-                  <ShieldCheck className="w-3.5 h-3.5 text-orange-primary flex-shrink-0" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-brand-primary flex-shrink-0" />
                   <span>{feat}</span>
                 </div>
               ))}
@@ -167,10 +168,10 @@ export default function PortfolioPage() {
           className="lg:col-span-5 bg-bg-card border border-border-main rounded-3xl p-6 md:p-8 flex flex-col justify-between"
         >
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-orange-primary/10 flex items-center justify-center text-orange-primary">
+            <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary">
               <Calculator className="w-5 h-5" />
             </div>
-            <h3 className="font-display font-semibold text-sm text-gray-900">
+            <h3 className="font-display font-semibold text-sm text-text-primary">
               Calculadora de Proyecciones de Rendimiento
             </h3>
           </div>
@@ -179,8 +180,8 @@ export default function PortfolioPage() {
           <div className="space-y-4 my-6">
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-[11px] text-text-muted">
-                <span>Saldo Principal (COP)</span>
-                <span className="font-bold text-gray-900">{isPrivate ? '••••' : `COP ${calcPrincipal.toLocaleString()}`}</span>
+                <span>Saldo Principal (MXN)</span>
+                <span className="font-bold text-text-primary">{isPrivate ? '••••' : `MXN ${calcPrincipal.toLocaleString()}`}</span>
               </div>
               <input
                 type="range"
@@ -189,14 +190,14 @@ export default function PortfolioPage() {
                 step={5000}
                 value={calcPrincipal}
                 onChange={(e) => setCalcPrincipal(Number(e.target.value))}
-                className="w-full h-1 bg-border-main rounded-lg appearance-none cursor-pointer accent-orange-primary"
+                className="w-full h-1 bg-border-main rounded-lg appearance-none cursor-pointer accent-brand-primary"
               />
             </div>
 
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-[11px] text-text-muted">
                 <span>Período de Duración (Meses)</span>
-                <span className="font-bold text-gray-900">{calcMonths} Meses</span>
+                <span className="font-bold text-text-primary">{calcMonths} Meses</span>
               </div>
               <input
                 type="range"
@@ -205,7 +206,7 @@ export default function PortfolioPage() {
                 step={3}
                 value={calcMonths}
                 onChange={(e) => setCalcMonths(Number(e.target.value))}
-                className="w-full h-1 bg-border-main rounded-lg appearance-none cursor-pointer accent-orange-primary"
+                className="w-full h-1 bg-border-main rounded-lg appearance-none cursor-pointer accent-brand-primary"
               />
             </div>
           </div>
@@ -216,15 +217,15 @@ export default function PortfolioPage() {
                 Valor Estimado de Madurez
               </span>
               <span className="text-base font-extrabold text-green-600 block mt-1 font-mono">
-                {isPrivate ? '••••' : `COP ${projectVal.toLocaleString(undefined, { maximumFractionDigits: 0 })}`}
+                {isPrivate ? '••••' : `MXN ${projectVal.toLocaleString(undefined, { maximumFractionDigits: 0 })}`}
               </span>
             </div>
             <div className="text-right">
               <span className="text-[10px] text-text-muted uppercase tracking-wider block">
                 Beneficio de Rendimiento Neto
               </span>
-              <span className="text-xs font-bold text-orange-primary block mt-1 font-mono">
-                {isPrivate ? '••••' : `+COP ${projectProfit.toLocaleString(undefined, { maximumFractionDigits: 0 })}`}
+              <span className="text-xs font-bold text-brand-primary block mt-1 font-mono">
+                {isPrivate ? '••••' : `+MXN ${projectProfit.toLocaleString(undefined, { maximumFractionDigits: 0 })}`}
               </span>
             </div>
           </div>
@@ -266,7 +267,7 @@ export default function PortfolioPage() {
                     tickLine={false}
                     axisLine={false}
                     tickMargin={8}
-                    tickFormatter={(val) => isPrivate ? '••••' : `COP ${val}`}
+                    tickFormatter={(val) => isPrivate ? '••••' : `MXN ${val}`}
                   />
                   <Tooltip
                     content={({ active, payload }) => {
@@ -276,7 +277,7 @@ export default function PortfolioPage() {
                           <div className="bg-bg-card border border-border-main p-3 rounded-xl shadow-lg text-xs">
                             <span className="font-bold text-gray-900 block">{data.month}</span>
                             <span className="text-green-600 block mt-1 font-semibold">
-                              Rendimiento Ganado: {isPrivate ? '••••' : `+COP ${data.profit}`}
+                              Rendimiento Ganado: {isPrivate ? '••••' : `+MXN ${data.profit}`}
                             </span>
                             <span className="text-[10px] text-text-muted mt-0.5 block">
                               Índice de Madurez: {data.rate}%

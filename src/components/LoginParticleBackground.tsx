@@ -83,7 +83,7 @@ export default function LoginParticleBackground() {
         if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
 
         ctx.beginPath();
-        ctx.fillStyle = i % 5 === 0 ? 'rgba(247, 147, 26, 0.9)' : 'rgba(255, 255, 255, 0.72)';
+        ctx.fillStyle = i % 5 === 0 ? 'rgba(247, 147, 26, 0.9)' : 'rgba(160, 174, 198, 0.42)';
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
 

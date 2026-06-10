@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import {
@@ -26,30 +27,30 @@ const homePlans = [
     name: 'Rendimiento Standard',
     minDeposit: 1000,
     roi: '28% - 32% anual',
-    features: ['Rendimiento diario', 'Soporte de cuenta', 'Panel privado con IA', 'Verificaciones automaticas', 'Custodia en frio personalizada'],
+    features: ['Rendimiento diario', 'Soporte de cuenta', 'Panel privado con IA', 'Verificaciones automáticas', 'Custodia en frío personalizada'],
   },
 ];
 
 const homeFAQs = [
   {
-    question: 'Como se administra mi inversion en Bitcoin?',
-    answer: 'Tus fondos se asignan de forma controlada dentro de nuestra estructura privada de Bitcoin. El equipo coordina operaciones, seguimiento y reportes para que puedas revisar el rendimiento desde tu panel.',
+    question: '¿Cómo se administra mi inversión en activos digitales?',
+    answer: 'Tus fondos se asignan de forma controlada dentro de nuestra estructura privada. El equipo coordina operaciones, seguimiento y reportes para que puedas revisar el rendimiento desde tu panel.',
   },
   {
-    question: 'Por que los depositos directos estan deshabilitados?',
-    answer: 'Para mantener controles de seguridad y cumplimiento, los depositos se coordinan con tu agente asignado. Desde soporte puedes solicitar la ruta disponible para completar cada operacion.',
+    question: '¿Por qué los depósitos directos están deshabilitados?',
+    answer: 'Para mantener controles de seguridad y cumplimiento, los depósitos se coordinan con tu agente asignado. Desde soporte puedes solicitar la ruta disponible para completar cada operación.',
   },
   {
-    question: 'Cuanto tardan en procesarse los retiros?',
-    answer: 'Las solicitudes de retiro pasan por verificacion facial y revision manual. El proceso normalmente toma entre 24 y 48 horas, dependiendo de la validacion de seguridad.',
+    question: '¿Cuánto tardan en procesarse los retiros?',
+    answer: 'Las solicitudes de retiro pasan por verificación facial y revisión manual. El proceso normalmente toma entre 24 y 48 horas, dependiendo de la validación de seguridad.',
   },
   {
-    question: 'Existe un monto minimo de retiro?',
-    answer: 'Si. El monto minimo de retiro es de COP 100 y cada solicitud debe cumplir las condiciones activas del plan contratado.',
+    question: '¿Existe un monto mínimo de retiro?',
+    answer: 'Sí. El monto mínimo de retiro es de MXN 100 y cada solicitud debe cumplir las condiciones activas del plan contratado.',
   },
   {
-    question: 'Como funciona la verificacion facial?',
-    answer: 'La verificacion facial usa la camara del navegador para confirmar que la solicitud coincide con el perfil registrado. El sistema puede pedir movimientos sencillos para completar la validacion.',
+    question: '¿Cómo funciona la verificación facial?',
+    answer: 'La verificación facial usa la cámara del navegador para confirmar que la solicitud coincide con el perfil registrado. El sistema puede pedir movimientos sencillos para completar la validación.',
   },
 ];
 
@@ -91,37 +92,37 @@ export default function LandingPage() {
   } satisfies Variants;
 
   return (
-    <div className="relative min-h-screen flex flex-col bg-bg-main text-gray-800">
+    <div className="relative min-h-screen flex flex-col bg-bg-main text-text-primary">
       {/* Dynamic Animated Particle Background */}
       <XiaomiBackground />
 
       {/* Navigation Header */}
-      <header className="fixed top-0 left-0 right-0 h-20 bg-white/80 backdrop-blur-md border-b border-border-main z-30 transition-all">
+      <header className="fixed top-0 left-0 right-0 h-20 bg-bg-main/70 backdrop-blur-md border-b border-border-main z-30 transition-all">
         <div className="max-w-7xl mx-auto h-full px-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <GemIcon className="w-8 h-8 text-orange-primary" />
-            <span className="font-display font-extrabold text-lg tracking-wide text-gray-900">CRYPTO GEM</span>
+            <Image src="/icon.svg" alt="FXTM Logo" width={40} height={40} className="w-10 h-10" />
+            <span className="font-display font-extrabold text-lg tracking-wide text-text-primary uppercase">FXTM Mining</span>
           </div>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-text-muted">
-            <a href="#features" className="hover:text-orange-primary transition-colors">Beneficios</a>
-            <a href="#plans" className="hover:text-orange-primary transition-colors">Planes</a>
-            <a href="#why-us" className="hover:text-orange-primary transition-colors">Seguridad</a>
-            <a href="#faq" className="hover:text-orange-primary transition-colors">FAQ</a>
+            <a href="#features" className="hover:text-brand-primary transition-colors">Beneficios</a>
+            <a href="#plans" className="hover:text-brand-primary transition-colors">Planes</a>
+            <a href="#why-us" className="hover:text-brand-primary transition-colors">Seguridad</a>
+            <a href="#faq" className="hover:text-brand-primary transition-colors">FAQ</a>
           </nav>
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-4">
             <Link
               href="/login"
-              className="px-5 py-2.5 rounded-xl border border-border-main text-sm font-semibold text-gray-700 hover:border-orange-primary/40 hover:shadow-glow transition-all"
+              className="px-5 py-2.5 rounded-xl border border-border-main text-sm font-semibold text-text-primary hover:border-brand-primary/40 hover:shadow-[0_0_15px_rgba(255,179,195,0.2)] transition-all"
             >
-              Iniciar sesion
+              Iniciar sesión
             </Link>
             <Link
               href="/login"
-              className="px-5 py-2.5 rounded-xl bg-orange-primary hover:bg-orange-hover text-sm font-semibold text-white shadow-lg shadow-orange-primary/15 transition-all"
+              className="px-5 py-2.5 rounded-xl bg-brand-primary hover:bg-brand-hover text-sm font-semibold text-bg-main shadow-lg shadow-brand-primary/15 transition-all"
             >
               Empezar
             </Link>
@@ -130,7 +131,7 @@ export default function LandingPage() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-text-muted hover:text-gray-900 transition-colors"
+            className="md:hidden text-text-muted hover:text-text-primary transition-colors"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -144,33 +145,33 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-20 left-0 right-0 bg-white border-b border-border-main px-6 py-8 flex flex-col gap-6 z-20 md:hidden shadow-2xl"
+            className="fixed top-20 left-0 right-0 glass-panel border-b border-border-main px-6 py-8 flex flex-col gap-6 z-20 md:hidden shadow-2xl"
           >
             <a
               href="#features"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-semibold text-text-muted hover:text-orange-primary"
+              className="text-sm font-semibold text-text-muted hover:text-brand-primary"
             >
               Beneficios
             </a>
             <a
               href="#plans"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-semibold text-text-muted hover:text-orange-primary"
+              className="text-sm font-semibold text-text-muted hover:text-brand-primary"
             >
               Planes
             </a>
             <a
               href="#why-us"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-semibold text-text-muted hover:text-orange-primary"
+              className="text-sm font-semibold text-text-muted hover:text-brand-primary"
             >
               Seguridad
             </a>
             <a
               href="#faq"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-semibold text-text-muted hover:text-orange-primary"
+              className="text-sm font-semibold text-text-muted hover:text-brand-primary"
             >
               FAQ
             </a>
@@ -178,13 +179,13 @@ export default function LandingPage() {
             <div className="flex flex-col gap-4">
               <Link
                 href="/login"
-                className="w-full text-center py-3 rounded-xl border border-border-main text-sm font-semibold text-gray-700 hover:border-orange-primary/45"
+                className="w-full text-center py-3 rounded-xl border border-border-main text-sm font-semibold text-text-primary hover:border-brand-primary/45"
               >
-                Iniciar sesion
+                Iniciar sesión
               </Link>
               <Link
                 href="/login"
-                className="w-full text-center py-3 rounded-xl bg-orange-primary text-sm font-semibold text-white"
+                className="w-full text-center py-3 rounded-xl bg-brand-primary text-sm font-semibold text-bg-main"
               >
                 Empezar
               </Link>
@@ -194,9 +195,9 @@ export default function LandingPage() {
       </AnimatePresence>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-24 pb-20 px-6 overflow-hidden bg-black text-white">
+      <section className="relative min-h-screen flex items-center justify-center pt-24 pb-20 px-6 overflow-hidden bg-bg-main text-text-primary">
         <LoginParticleBackground />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_25%,rgba(247,147,26,0.20),transparent_38%),linear-gradient(180deg,rgba(0,0,0,0.15),rgba(0,0,0,0.88))] z-0" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_25%,rgba(255,179,195,0.12),transparent_42%),linear-gradient(180deg,rgba(25,20,48,0.08),rgba(15,12,30,0.96))] z-0" />
         <div className="max-w-6xl mx-auto w-full flex flex-col items-center text-center relative z-10">
           
           {/* Left Text */}
@@ -205,28 +206,28 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-primary/15 border border-orange-primary/30 text-xs font-bold text-orange-primary w-fit mb-6 uppercase tracking-wider shadow-glow"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-primary/15 border border-brand-primary/35 text-xs font-bold text-brand-primary w-fit mb-6 uppercase tracking-wider shadow-[0_0_18px_rgba(255,179,195,0.22)]"
             >
-              <Zap className="w-3.5 h-3.5 fill-orange-primary" />
-              Plataforma Bitcoin privada en Colombia
+              <Zap className="w-3.5 h-3.5 fill-brand-primary" />
+              Plataforma de inversión de élite
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="font-display font-extrabold text-4xl sm:text-5xl md:text-7xl text-white leading-tight tracking-tight max-w-5xl"
+              className="font-display font-extrabold text-4xl sm:text-5xl md:text-7xl text-text-primary leading-tight tracking-tight max-w-5xl"
             >
-              Invierte en Bitcoin con una experiencia <span className="text-orange-primary font-bold">segura y premium</span>
+              Invierte con una experiencia <span className="text-brand-primary font-bold">segura y premium</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-white/72 text-base sm:text-lg mt-6 max-w-2xl mx-auto leading-relaxed font-medium"
+              className="text-text-muted text-base sm:text-lg mt-6 max-w-2xl mx-auto leading-relaxed font-medium"
             >
-              Monitorea tu crecimiento, revisa tus rendimientos y gestiona tu portafolio desde un panel privado creado para inversionistas en Colombia.
+              Monitorea tu crecimiento, revisa tus rendimientos y gestiona tu portafolio desde un panel privado creado para inversionistas exigentes.
             </motion.p>
 
             <motion.div
@@ -237,14 +238,14 @@ export default function LandingPage() {
             >
               <Link
                 href="/login"
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-orange-primary hover:bg-orange-hover text-base font-bold text-white shadow-xl shadow-orange-primary/20 flex items-center justify-center gap-2 group transition-all"
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-brand-primary hover:bg-brand-hover text-base font-bold text-bg-main shadow-xl shadow-brand-primary/20 flex items-center justify-center gap-2 group transition-all"
               >
                 Empezar ahora
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 href="/login"
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl border border-white/20 text-base font-semibold text-white/85 hover:border-orange-primary/40 hover:bg-white/10 flex items-center justify-center transition-all"
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl border border-border-main text-base font-semibold text-text-primary/85 hover:border-brand-primary/40 hover:bg-bg-card/40 flex items-center justify-center transition-all"
               >
                 Acceder al panel
               </Link>
@@ -257,11 +258,11 @@ export default function LandingPage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ type: 'spring', stiffness: 50, damping: 20, delay: 0.3 }}
-              className="relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center"
+              className="relative w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 flex items-center justify-center"
             >
               {/* Outer Ripple Rings */}
-              <div className="absolute inset-0 rounded-full border border-orange-primary/10 animate-[ping_3s_infinite]" />
-              <div className="absolute inset-4 rounded-full border border-orange-primary/5 animate-[ping_4s_infinite]" />
+              <div className="absolute inset-0 rounded-full border border-brand-primary/10 animate-[ping_3s_infinite]" />
+              <div className="absolute inset-4 rounded-full border border-brand-primary/5 animate-[ping_4s_infinite]" />
               
               {/* Floating Gem */}
               <motion.div
@@ -274,10 +275,17 @@ export default function LandingPage() {
                   repeat: Infinity,
                   ease: 'easeInOut'
                 }}
-                className="w-48 h-48 sm:w-64 sm:h-64 rounded-full bg-gradient-to-tr from-orange-primary/20 to-white/5 border border-orange-primary/35 flex items-center justify-center shadow-2xl relative select-none backdrop-blur-sm"
+              className="w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 rounded-full bg-gradient-to-tr from-brand-primary/22 to-bg-main/10 border border-brand-primary/40 flex items-center justify-center shadow-[0_0_40px_rgba(255,179,195,0.18)] relative select-none backdrop-blur-sm"
               >
-                <div className="absolute inset-3 rounded-full border border-dashed border-orange-primary/25" />
-                <GemIcon className="w-24 h-24 sm:w-32 sm:h-32 text-orange-primary filter drop-shadow-[0_0_20px_rgba(255,122,0,0.3)]" />
+                <div className="absolute inset-3 rounded-full border border-dashed border-brand-primary/25" />
+                <Image
+                  src="/icon.svg"
+                  alt="FXTM Logo"
+                  width={160}
+                  height={160}
+                  className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 object-contain drop-shadow-[0_0_20px_rgba(255,179,195,0.35)]"
+                  priority
+                />
               </motion.div>
             </motion.div>
           </div>
@@ -285,14 +293,14 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-24 px-6 bg-white/50 relative border-t border-border-main">
+      <section id="features" className="py-24 px-6 relative border-t border-border-main">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-gray-900">
-              Disenado para crecer con confianza
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-text-primary">
+              Diseñado para crecer con confianza
             </h2>
             <p className="text-text-muted text-sm sm:text-base mt-4">
-              Herramientas claras, seguras y modernas para controlar tu inversion en Bitcoin desde cualquier dispositivo.
+              Herramientas claras, seguras y modernas para controlar tu inversión desde cualquier dispositivo.
             </p>
           </div>
 
@@ -304,46 +312,46 @@ export default function LandingPage() {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16"
           >
             {/* Feature 1 */}
-            <motion.div variants={itemVariants} className="glass-panel rounded-2xl p-6 glass-panel-hover shadow-sm">
-              <div className="w-12 h-12 rounded-xl bg-orange-primary/10 flex items-center justify-center text-orange-primary mb-5">
+            <motion.div variants={itemVariants} className="glass-panel border border-border-main rounded-2xl p-6 shadow-sm hover:border-brand-primary/30 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-5">
                 <Shield className="w-6 h-6" />
               </div>
-              <h3 className="font-display font-semibold text-lg text-gray-900">Custodia en frio</h3>
+              <h3 className="font-display font-semibold text-lg text-text-primary">Custodia en frío</h3>
               <p className="text-text-muted text-xs leading-relaxed mt-3">
-                Los activos se protegen con protocolos de custodia fuera de linea y controles de multiples firmas.
+                Los activos se protegen con protocolos de custodia fuera de línea y controles de múltiples firmas.
               </p>
             </motion.div>
 
             {/* Feature 2 */}
-            <motion.div variants={itemVariants} className="glass-panel rounded-2xl p-6 glass-panel-hover shadow-sm">
-              <div className="w-12 h-12 rounded-xl bg-orange-primary/10 flex items-center justify-center text-orange-primary mb-5">
+            <motion.div variants={itemVariants} className="glass-panel border border-border-main rounded-2xl p-6 shadow-sm hover:border-brand-primary/30 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-5">
                 <TrendingUp className="w-6 h-6" />
               </div>
-              <h3 className="font-display font-semibold text-lg text-gray-900">Seguimiento diario</h3>
+              <h3 className="font-display font-semibold text-lg text-text-primary">Seguimiento diario</h3>
               <p className="text-text-muted text-xs leading-relaxed mt-3">
-                Revisa rendimientos, movimientos y cambios semanales con datos faciles de leer.
+                Revisa rendimientos, movimientos y cambios semanales con datos fáciles de leer.
               </p>
             </motion.div>
 
             {/* Feature 3 */}
-            <motion.div variants={itemVariants} className="glass-panel rounded-2xl p-6 glass-panel-hover shadow-sm">
-              <div className="w-12 h-12 rounded-xl bg-orange-primary/10 flex items-center justify-center text-orange-primary mb-5">
+            <motion.div variants={itemVariants} className="glass-panel border border-border-main rounded-2xl p-6 shadow-sm hover:border-brand-primary/30 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-5">
                 <Cpu className="w-6 h-6" />
               </div>
-              <h3 className="font-display font-semibold text-lg text-gray-900">Analisis inteligente</h3>
+              <h3 className="font-display font-semibold text-lg text-text-primary">Análisis inteligente</h3>
               <p className="text-text-muted text-xs leading-relaxed mt-3">
-                Recibe lecturas del mercado, niveles relevantes y resumenes utiles para tomar mejores decisiones.
+                Recibe lecturas del mercado, niveles relevantes y resúmenes útiles para tomar mejores decisiones.
               </p>
             </motion.div>
 
             {/* Feature 4 */}
-            <motion.div variants={itemVariants} className="glass-panel rounded-2xl p-6 glass-panel-hover shadow-sm">
-              <div className="w-12 h-12 rounded-xl bg-orange-primary/10 flex items-center justify-center text-orange-primary mb-5">
+            <motion.div variants={itemVariants} className="glass-panel border border-border-main rounded-2xl p-6 shadow-sm hover:border-brand-primary/30 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-5">
                 <UserCheck className="w-6 h-6" />
               </div>
-              <h3 className="font-display font-semibold text-lg text-gray-900">Agente privado</h3>
+              <h3 className="font-display font-semibold text-lg text-text-primary">Agente privado</h3>
               <p className="text-text-muted text-xs leading-relaxed mt-3">
-                Coordina depositos, retiros y soporte con un asesor asignado a tu cuenta.
+                Coordina depósitos, retiros y soporte con un asesor asignado a tu cuenta.
               </p>
             </motion.div>
           </motion.div>
@@ -354,11 +362,11 @@ export default function LandingPage() {
       <section id="plans" className="py-24 px-6 relative border-t border-border-main">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-gray-900">
-              Planes de inversion para Colombia
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-text-primary">
+              Planes de inversión
             </h2>
             <p className="text-text-muted text-sm sm:text-base mt-4">
-              Elige una ruta clara para empezar, medir resultados y escalar tu capital con acompanamiento privado.
+              Elige una ruta clara para empezar, medir resultados y escalar tu capital con acompañamiento privado.
             </p>
           </div>
 
@@ -368,23 +376,23 @@ export default function LandingPage() {
               return (
                 <div
                   key={plan.id}
-                  className={`glass-panel rounded-2xl p-6 flex flex-col justify-between relative transition-all duration-300 shadow-sm w-full max-w-md ${
-                    isStandard ? 'glow-border-active ring-1 ring-orange-primary/30 scale-105 md:scale-100 lg:scale-105 z-10' : ''
+                  className={`glass-panel border border-border-main rounded-2xl p-6 flex flex-col justify-between relative transition-all duration-300 shadow-sm w-full max-w-md ${
+                    isStandard ? 'ring-1 ring-brand-primary/30 scale-105 md:scale-100 lg:scale-105 z-10 shadow-[0_0_30px_rgba(255,179,195,0.08)]' : ''
                   }`}
                 >
                   {isStandard && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-orange-primary text-white font-extrabold text-[10px] uppercase px-3 py-1 rounded-full tracking-wider">
-                      Mas elegido
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-primary text-bg-main font-extrabold text-[10px] uppercase px-3 py-1 rounded-full tracking-wider">
+                      Más elegido
                     </span>
                   )}
                   
                   <div>
-                    <h3 className="font-display font-bold text-lg text-gray-900">{plan.name}</h3>
+                    <h3 className="font-display font-bold text-lg text-text-primary">{plan.name}</h3>
                     <div className="mt-4 flex items-baseline gap-1">
-                      <span className="text-2xl font-extrabold text-gray-900">COP {plan.minDeposit.toLocaleString()}</span>
-                      <span className="text-text-muted text-xs">minimo</span>
+                      <span className="text-2xl font-extrabold text-text-primary">MXN {plan.minDeposit.toLocaleString()}</span>
+                      <span className="text-text-muted text-xs">mínimo</span>
                     </div>
-                    <div className="mt-2 text-xs font-bold text-orange-primary">
+                    <div className="mt-2 text-xs font-bold text-brand-primary">
                       {plan.roi}
                     </div>
 
@@ -393,7 +401,7 @@ export default function LandingPage() {
                     <ul className="space-y-3">
                       {plan.features.map((feature, idx) => (
                         <li key={idx} className="flex items-start gap-2.5 text-xs text-text-muted leading-tight">
-                          <CheckIcon className="w-3.5 h-3.5 text-orange-primary flex-shrink-0 mt-0.5" />
+                          <CheckIcon className="w-3.5 h-3.5 text-brand-primary flex-shrink-0 mt-0.5" />
                           <span>{feature}</span>
                         </li>
                       ))}
@@ -405,8 +413,8 @@ export default function LandingPage() {
                       href="/login"
                       className={`block w-full text-center py-3 rounded-xl text-xs font-bold transition-all ${
                         isStandard
-                          ? 'bg-orange-primary hover:bg-orange-hover text-white shadow-lg shadow-orange-primary/10'
-                          : 'bg-white hover:bg-gray-50 border border-border-main text-gray-800'
+                          ? 'bg-brand-primary hover:bg-brand-hover text-bg-main shadow-lg shadow-brand-primary/10'
+                          : 'bg-bg-main/70 hover:bg-bg-main border border-border-main text-text-primary'
                       }`}
                     >
                       Invertir ahora
@@ -420,38 +428,38 @@ export default function LandingPage() {
       </section>
 
       {/* Why Choose Us Section */}
-      <section id="why-us" className="py-24 px-6 bg-white/50 border-t border-border-main relative">
+      <section id="why-us" className="py-24 px-6 border-t border-border-main relative">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-5">
-              <h2 className="font-display font-bold text-3xl sm:text-4xl text-gray-900">
-                Un estandar mas privado para Bitcoin
+              <h2 className="font-display font-bold text-3xl sm:text-4xl text-text-primary">
+                Un estándar más privado
               </h2>
               <p className="text-text-muted text-sm mt-4 leading-relaxed">
-                Combinamos controles de custodia, verificacion personalizada y una experiencia digital simple para inversionistas que quieren claridad y seguridad.
+                Combinamos controles de custodia, verificación personalizada y una experiencia digital simple para inversionistas que quieren claridad y seguridad.
               </p>
               
               <div className="space-y-6 mt-8">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-orange-primary/10 flex items-center justify-center text-orange-primary flex-shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary flex-shrink-0">
                     <Lock className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-sm text-gray-900">Sin exposicion de billetera caliente</h4>
+                    <h4 className="font-semibold text-sm text-text-primary">Sin exposición de billetera caliente</h4>
                     <p className="text-text-muted text-xs mt-1">
-                      La estructura prioriza almacenamiento desconectado, revision constante y procesos de retiro controlados.
+                      La estructura prioriza almacenamiento desconectado, revisión constante y procesos de retiro controlados.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-orange-primary/10 flex items-center justify-center text-orange-primary flex-shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary flex-shrink-0">
                     <UserCheck className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-sm text-gray-900">Validacion facial y cumplimiento</h4>
+                    <h4 className="font-semibold text-sm text-text-primary">Validación facial y cumplimiento</h4>
                     <p className="text-text-muted text-xs mt-1">
-                      Los retiros pasan por verificacion de identidad y revision manual para proteger cada cuenta.
+                      Los retiros pasan por verificación de identidad y revisión manual para proteger cada cuenta.
                     </p>
                   </div>
                 </div>
@@ -459,21 +467,21 @@ export default function LandingPage() {
             </div>
 
             <div className="lg:col-span-7 grid grid-cols-2 gap-4">
-              <div className="p-6 bg-white border border-border-main rounded-2xl flex flex-col gap-2 shadow-sm">
-                <span className="font-display font-bold text-3xl text-orange-primary">COP 120M+</span>
-                <span className="text-xs font-semibold text-gray-800">Activos bajo custodia</span>
+              <div className="p-6 glass-panel border border-border-main rounded-2xl flex flex-col gap-2 shadow-sm">
+                <span className="font-display font-bold text-3xl text-brand-primary">MXN 50M+</span>
+                <span className="text-xs font-semibold text-text-muted">Activos bajo custodia</span>
               </div>
-              <div className="p-6 bg-white border border-border-main rounded-2xl flex flex-col gap-2 shadow-sm mt-6">
-                <span className="font-display font-bold text-3xl text-orange-primary">0%</span>
-                <span className="text-xs font-semibold text-gray-800">Brechas historicas de seguridad</span>
+              <div className="p-6 glass-panel border border-border-main rounded-2xl flex flex-col gap-2 shadow-sm mt-6">
+                <span className="font-display font-bold text-3xl text-brand-primary">0%</span>
+                <span className="text-xs font-semibold text-text-muted">Brechas históricas de seguridad</span>
               </div>
-              <div className="p-6 bg-white border border-border-main rounded-2xl flex flex-col gap-2 shadow-sm">
-                <span className="font-display font-bold text-3xl text-orange-primary">2.4k+</span>
-                <span className="text-xs font-semibold text-gray-800">Cuentas Standard activas</span>
+              <div className="p-6 glass-panel border border-border-main rounded-2xl flex flex-col gap-2 shadow-sm">
+                <span className="font-display font-bold text-3xl text-brand-primary">2.4k+</span>
+                <span className="text-xs font-semibold text-text-muted">Cuentas Standard activas</span>
               </div>
-              <div className="p-6 bg-white border border-border-main rounded-2xl flex flex-col gap-2 shadow-sm mt-6">
-                <span className="font-display font-bold text-3xl text-orange-primary">24/7</span>
-                <span className="text-xs font-semibold text-gray-800">Cobertura de agente privado</span>
+              <div className="p-6 glass-panel border border-border-main rounded-2xl flex flex-col gap-2 shadow-sm mt-6">
+                <span className="font-display font-bold text-3xl text-brand-primary">24/7</span>
+                <span className="text-xs font-semibold text-text-muted">Cobertura de agente privado</span>
               </div>
             </div>
           </div>
@@ -484,9 +492,9 @@ export default function LandingPage() {
       <section id="faq" className="py-24 px-6 border-t border-border-main relative">
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center">
-            <h2 className="font-display font-bold text-3xl text-gray-900">Preguntas frecuentes</h2>
+            <h2 className="font-display font-bold text-3xl text-text-primary">Preguntas frecuentes</h2>
             <p className="text-text-muted text-xs sm:text-sm mt-3">
-              Todo lo esencial sobre depositos, retiros, seguridad y gestion del portafolio.
+              Todo lo esencial sobre depósitos, retiros, seguridad y gestión del portafolio.
             </p>
           </div>
 
@@ -496,19 +504,19 @@ export default function LandingPage() {
               return (
                 <div
                   key={index}
-                  className="bg-white border border-border-main rounded-2xl overflow-hidden transition-all shadow-sm"
+                  className="glass-panel border border-border-main rounded-2xl overflow-hidden transition-all shadow-sm"
                 >
                   <button
                     onClick={() => toggleFaq(index)}
-                    className="w-full flex items-center justify-between p-5 text-left font-semibold text-sm text-gray-800 hover:text-orange-primary transition-colors focus:outline-none"
+                    className="w-full flex items-center justify-between p-5 text-left font-semibold text-sm text-text-primary hover:text-brand-primary transition-colors focus:outline-none"
                   >
                     <span className="flex items-center gap-3">
-                      <HelpCircle className="w-4.5 h-4.5 text-orange-primary flex-shrink-0" />
+                      <HelpCircle className="w-4.5 h-4.5 text-brand-primary flex-shrink-0" />
                       {faq.question}
                     </span>
                     <ChevronDown
                       className={`w-5 h-5 text-text-muted transition-transform duration-300 ${
-                        isOpen ? 'rotate-180 text-orange-primary' : ''
+                        isOpen ? 'rotate-180 text-brand-primary' : ''
                       }`}
                     />
                   </button>
@@ -535,48 +543,48 @@ export default function LandingPage() {
       </section>
 
       {/* Footer Section */}
-      <footer className="bg-white border-t border-border-main mt-auto relative z-10">
+      <footer className="glass-panel border-t border-border-main mt-auto relative z-10">
         <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center gap-3">
-              <GemIcon className="w-8 h-8 text-orange-primary" />
-              <span className="font-display font-extrabold text-lg tracking-wide text-gray-900">CRYPTO GEM</span>
+              <Image src="/icon.svg" alt="FXTM Logo" width={40} height={40} className="w-10 h-10" />
+              <span className="font-display font-extrabold text-lg tracking-wide text-text-primary uppercase">FXTM Mining</span>
             </div>
             <p className="text-text-muted text-[11px] leading-relaxed mt-4">
-              Gestion privada de Bitcoin para inversionistas en Colombia que buscan seguridad, claridad y acompanamiento.
+              Gestión privada de inversiones para clientes que buscan seguridad, claridad y acompañamiento.
             </p>
           </div>
 
           <div>
-            <h4 className="font-semibold text-xs text-gray-950 uppercase tracking-wider">Plataforma</h4>
+            <h4 className="font-semibold text-xs text-text-primary uppercase tracking-wider">Plataforma</h4>
             <ul className="mt-4 space-y-2 text-[11px] text-text-muted">
-              <li><Link href="/login" className="hover:text-orange-primary transition-colors">Resumen</Link></li>
-              <li><Link href="/login" className="hover:text-orange-primary transition-colors">Planes de inversion</Link></li>
-              <li><Link href="/login" className="hover:text-orange-primary transition-colors">Custodia segura</Link></li>
+              <li><Link href="/login" className="hover:text-brand-primary transition-colors">Resumen</Link></li>
+              <li><Link href="/login" className="hover:text-brand-primary transition-colors">Planes de inversión</Link></li>
+              <li><Link href="/login" className="hover:text-brand-primary transition-colors">Custodia segura</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-semibold text-xs text-gray-950 uppercase tracking-wider">Recursos</h4>
+            <h4 className="font-semibold text-xs text-text-primary uppercase tracking-wider">Recursos</h4>
             <ul className="mt-4 space-y-2 text-[11px] text-text-muted">
-              <li><a href="#faq" className="hover:text-orange-primary transition-colors">FAQ</a></li>
-              <li><a href="#" className="hover:text-orange-primary transition-colors">Registro blockchain</a></li>
-              <li><a href="#" className="hover:text-orange-primary transition-colors">Informes de auditoria</a></li>
+              <li><a href="#faq" className="hover:text-brand-primary transition-colors">FAQ</a></li>
+              <li><a href="#" className="hover:text-brand-primary transition-colors">Registro blockchain</a></li>
+              <li><a href="#" className="hover:text-brand-primary transition-colors">Informes de auditoría</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-semibold text-xs text-gray-950 uppercase tracking-wider">Legal</h4>
+            <h4 className="font-semibold text-xs text-text-primary uppercase tracking-wider">Legal</h4>
             <ul className="mt-4 space-y-2 text-[11px] text-text-muted">
-              <li><a href="#" className="hover:text-orange-primary transition-colors">Terminos de servicio</a></li>
-              <li><a href="#" className="hover:text-orange-primary transition-colors">Politica de privacidad</a></li>
-              <li><a href="#" className="hover:text-orange-primary transition-colors">Acuerdo de custodia</a></li>
+              <li><a href="#" className="hover:text-brand-primary transition-colors">Términos de servicio</a></li>
+              <li><a href="#" className="hover:text-brand-primary transition-colors">Política de privacidad</a></li>
+              <li><a href="#" className="hover:text-brand-primary transition-colors">Acuerdo de custodia</a></li>
             </ul>
           </div>
         </div>
 
         <div className="max-w-7xl mx-auto px-6 py-6 border-t border-border-main flex flex-col sm:flex-row items-center justify-between text-[10px] text-text-muted">
-          <span>&copy; 2026 Crypto Gem Colombia. Todos los derechos reservados.</span>
+          <span>&copy; {new Date().getFullYear()} FXTM Mining Investment Company. Todos los derechos reservados.</span>
         </div>
       </footer>
     </div>

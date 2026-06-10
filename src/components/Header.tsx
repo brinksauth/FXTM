@@ -15,7 +15,7 @@ export default function Header() {
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(3);
-  const [isPrivate, setIsPrivate] = useState(readPrivacyPreference);
+  const [isPrivate, setIsPrivate] = useState(true);
   const notifRef = useRef<HTMLDivElement | null>(null);
   const profileRef = useRef<HTMLDivElement | null>(null);
 
@@ -58,8 +58,8 @@ export default function Header() {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      setTime(now.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
-      setDate(now.toLocaleDateString('es-CO', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }));
+      setTime(now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+      setDate(now.toLocaleDateString('es-MX', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }));
     };
 
     updateTime();
@@ -92,20 +92,20 @@ export default function Header() {
   };
 
   return (
-    <header className="min-h-24 bg-bg-card border-b border-border-main flex items-center justify-between gap-3 px-5 py-5 sm:px-7 md:px-8 relative z-10">
+    <header className="min-h-24 glass-panel border-b border-border-main flex items-center justify-between gap-3 px-5 py-5 sm:px-7 md:px-8 relative z-10">
       {/* Welcome & Date Ticker */}
       <div className="flex flex-col">
-        <h2 className="font-display font-bold text-base sm:text-lg md:text-xl text-gray-900 leading-tight">
-          Bienvenido de nuevo, <span className="text-orange-primary">{mockUser.name}</span>
+        <h2 className="font-display font-bold text-base sm:text-lg md:text-xl text-text-primary leading-tight">
+          Bienvenido de nuevo, <span className="text-brand-primary">{mockUser.name}</span>
         </h2>
         <div className="flex items-center gap-3 mt-1 text-[11px] sm:text-xs text-text-muted">
           <span className="flex items-center gap-1.5">
-            <Calendar className="w-3.5 h-3.5 text-orange-primary" />
+            <Calendar className="w-3.5 h-3.5 text-brand-primary" />
             {date}
           </span>
           <span className="w-1.5 h-1.5 rounded-full bg-border-main hidden sm:inline" />
           <span className="flex items-center gap-1.5 hidden sm:flex">
-            <Clock className="w-3.5 h-3.5 text-orange-primary" />
+            <Clock className="w-3.5 h-3.5 text-brand-primary" />
             {time}
           </span>
         </div>
@@ -116,7 +116,7 @@ export default function Header() {
         {/* Privacy Balance Toggle */}
         <button
           onClick={togglePrivacy}
-          className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-bg-main border border-border-main flex items-center justify-center text-text-muted hover:text-gray-900 hover:border-orange-primary/30 hover:shadow-glow transition-all duration-300"
+          className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-bg-main border border-border-main flex items-center justify-center text-text-muted hover:text-text-primary hover:border-brand-primary/30 hover:shadow-glow transition-all duration-300"
           title={isPrivate ? "Mostrar todos los montos" : "Ocultar todos los montos"}
         >
           {isPrivate ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -126,11 +126,11 @@ export default function Header() {
         <div className="relative" ref={notifRef}>
           <button
             onClick={() => setIsNotifOpen(!isNotifOpen)}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-bg-main border border-border-main flex items-center justify-center text-text-muted hover:text-gray-900 hover:border-orange-primary/30 hover:shadow-glow transition-all duration-300 relative"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-bg-main border border-border-main flex items-center justify-center text-text-muted hover:text-text-primary hover:border-brand-primary/30 hover:shadow-glow transition-all duration-300 relative"
           >
             <Bell className="w-5 h-5" />
             {unreadCount > 0 && (
-              <span className="absolute top-2 right-2.5 w-2.5 h-2.5 rounded-full bg-orange-primary border-2 border-bg-card animate-pulse" />
+              <span className="absolute top-2 right-2.5 w-2.5 h-2.5 rounded-full bg-brand-primary border-2 border-bg-card animate-pulse" />
             )}
           </button>
 
@@ -141,14 +141,14 @@ export default function Header() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 15 }}
                 transition={{ duration: 0.2 }}
-                className="absolute right-0 mt-3 w-80 sm:w-96 bg-bg-card border border-border-main rounded-2xl shadow-xl z-50 overflow-hidden"
+                className="absolute right-0 mt-3 w-80 sm:w-96 glass-panel border border-border-main rounded-2xl shadow-xl z-50 overflow-hidden"
               >
                 <div className="p-4 border-b border-border-main flex items-center justify-between bg-bg-main/50">
-                  <h3 className="font-display font-semibold text-sm text-gray-900">Notificaciones</h3>
+                  <h3 className="font-display font-semibold text-sm text-text-primary">Notificaciones</h3>
                   {unreadCount > 0 && (
                     <button
                       onClick={handleMarkAllRead}
-                      className="text-xs text-orange-primary hover:text-orange-hover font-semibold transition-colors"
+                      className="text-xs text-brand-primary hover:text-brand-hover font-semibold transition-colors"
                     >
                       Marcar todo como leído
                     </button>
@@ -159,15 +159,15 @@ export default function Header() {
                     <div
                       key={notif.id}
                       className={`p-4 hover:bg-bg-main/30 transition-colors ${
-                        notif.unread && unreadCount > 0 ? 'bg-orange-primary/5' : ''
+                        notif.unread && unreadCount > 0 ? 'bg-brand-primary/5' : ''
                       }`}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-orange-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <ShieldAlert className="w-4.5 h-4.5 text-orange-primary" />
+                        <div className="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <ShieldAlert className="w-4.5 h-4.5 text-brand-primary" />
                         </div>
                         <div className="flex-1">
-                          <h4 className="font-semibold text-xs text-gray-900">{notif.title}</h4>
+                          <h4 className="font-semibold text-xs text-text-primary">{notif.title}</h4>
                           <p className="text-text-muted text-[11px] mt-1 leading-relaxed">{notif.desc}</p>
                           <span className="text-[10px] text-text-muted/65 mt-2 block">{notif.time}</span>
                         </div>
@@ -184,7 +184,7 @@ export default function Header() {
         <div className="relative sm:pl-4 sm:border-l sm:border-border-main" ref={profileRef}>
           <button
             onClick={() => setIsProfileOpen(!isProfileOpen)}
-            className="flex items-center gap-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-primary/30"
+            className="flex items-center gap-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary/30"
             title="Abrir perfil"
           >
             <Image
@@ -192,11 +192,11 @@ export default function Header() {
               alt={mockUser.name}
               width={40}
               height={40}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-cover border border-orange-primary/20 bg-orange-primary/10"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-cover border border-brand-primary/20 bg-brand-primary/10"
             />
             <div className="hidden lg:flex flex-col text-left">
-              <span className="font-semibold text-sm text-gray-900 leading-none">{mockUser.name}</span>
-              <span className="text-[10px] text-orange-primary font-medium mt-1 leading-none">
+              <span className="font-semibold text-sm text-text-primary leading-none">{mockUser.name}</span>
+              <span className="text-[10px] text-brand-primary font-medium mt-1 leading-none">
                 {mockUser.investmentService}
               </span>
             </div>
@@ -209,15 +209,15 @@ export default function Header() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
                 transition={{ duration: 0.18 }}
-                className="absolute right-0 mt-3 w-56 bg-bg-card border border-border-main rounded-2xl shadow-xl z-50 overflow-hidden"
+                className="absolute right-0 mt-3 w-56 glass-panel border border-border-main rounded-2xl shadow-xl z-50 overflow-hidden"
               >
                 <div className="p-4 border-b border-border-main">
-                  <span className="text-xs font-bold text-gray-900 block leading-tight">{mockUser.name}</span>
+                  <span className="text-xs font-bold text-text-primary block leading-tight">{mockUser.name}</span>
                   <span className="text-[10px] text-text-muted block mt-1 break-all">{mockUser.email}</span>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold text-red-600 hover:bg-red-50 transition-colors"
+                  className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold text-red-400 hover:bg-red-500/10 transition-colors"
                 >
                   <LogOut className="w-4 h-4" />
                   Cerrar sesión

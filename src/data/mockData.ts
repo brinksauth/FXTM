@@ -48,113 +48,48 @@ export interface InvestmentPlan {
   features: string[];
 }
 
-export const formatCOP = (value: number) =>
-  new Intl.NumberFormat('es-CO', {
+export const formatMXN = (value: number) =>
+  new Intl.NumberFormat('es-MX', {
     style: 'currency',
-    currency: 'COP',
+    currency: 'MXN',
     maximumFractionDigits: 0,
   }).format(value);
 
 export const mockUser: UserProfile = {
-  name: 'JULIO QUINTERO DAZA',
-  investmentService: 'Rendimiento Estándar',
-  portfolioValue: 47850000,
-  profit: 42850000,
+  name: 'Johan Froesse Martens',
+  investmentService: 'Plan plata',
+  portfolioValue: 15500,
+  profit: 14500,
   growthPercentage: 31.5,
   btcHoldings: 0.7472,
-  accountNumber: '302 5468241',
-  bankName: 'Nequi bank',
-  email: 'julioquintero7129@gmail.com',
-  phone: '+57 302 5468241',
+  accountNumber: '722969020038509150',
+  bankName: 'Mercado pago',
+  email: 'johnnyfroesse2006@gmail.com',
+  phone: '+52 625 127 1647',
   password: '12345PP',
 };
 
 export const mockTransactions: Transaction[] = [
-  // Transacciones recientes
-  {
-    id: 'TXN-009',
-    date: 'Junio 2026',
-    type: 'Ganancia',
-    status: 'Completado',
-    amount: 9850000,
-    btcAmount: 0.1536,
-    reference: 'REF-BTC-PRF-009',
-  },
-  {
-    id: 'TXN-008',
-    date: 'Mayo 2026',
-    type: 'Ganancia',
-    status: 'Completado',
-    amount: 8750000,
-    btcAmount: 0.1365,
-    reference: 'REF-BTC-PRF-008',
-  },
-  {
-    id: 'TXN-007',
-    date: 'Abril 2026',
-    type: 'Ganancia',
-    status: 'Completado',
-    amount: 7500000,
-    btcAmount: 0.117,
-    reference: 'REF-BTC-PRF-007',
-  },
-  {
-    id: 'TXN-006',
-    date: 'Marzo 2026',
-    type: 'Ganancia',
-    status: 'Completado',
-    amount: 6800000,
-    btcAmount: 0.1061,
-    reference: 'REF-BTC-PRF-006',
-  },
-  {
-    id: 'TXN-005',
-    date: 'Febrero 2026',
-    type: 'Ganancia',
-    status: 'Completado',
-    amount: 5400000,
-    btcAmount: 0.0842,
-    reference: 'REF-BTC-PRF-005',
-  },
-  {
-    id: 'TXN-004',
-    date: 'Enero 2026',
-    type: 'Ganancia',
-    status: 'Completado',
-    amount: 4550000,
-    btcAmount: 0.071,
-    reference: 'REF-BTC-PRF-004',
-  },
-  {
-    id: 'TXN-003',
-    date: 'Enero 2026',
-    type: 'Depósito',
-    status: 'Completado',
-    amount: 3000000,
-    btcAmount: 0.0468,
-    reference: 'REF-BTC-DEP-003',
-  },
-  {
-    id: 'TXN-002',
-    date: 'Diciembre 2025',
-    type: 'Ganancia',
-    status: 'Completado',
-    amount: 4000000,
-    btcAmount: 0.0624,
-    reference: 'REF-BTC-PRF-002',
-  },
   {
     id: 'TXN-001',
-    date: 'Diciembre 2025',
+    date: '9 Jun 2026',
     type: 'Depósito',
     status: 'Completado',
-    amount: 2000000,
+    amount: 1000,
     btcAmount: 0.0312,
     reference: 'REF-BTC-DEP-001',
   },
+  {
+    id: 'TXN-002',
+    date: '9 Jun 2026',
+    type: 'Ganancia',
+    status: 'Completado',
+    amount: 14500,
+    btcAmount: 0.2258,
+    reference: 'REF-BTC-PRF-001',
+  },
 ];
 
-// Historical Bitcoin price data for Recharts (representing 1D, 1W, 1M, 1Y charts)
 export const mockChartData: Record<string, ChartDataPoint[]> = {
   '1D': [
     { date: '00:00', price: 63800, value: 49764 },
@@ -207,32 +142,37 @@ export const mockWeeklyPerformance: WeeklyPerformance[] = [
 ];
 
 export const mockInsights = [
-  "Bitcoin se mantiene estable esta semana, manteniendo el nivel base de soporte de COP 64.000.",
-  "El valor de tu portafolio aumentó un +4.2% desde el martes pasado, impulsado por continuas recompensas de bloque.",
-  "El sentimiento del mercado sigue siendo altamente positivo (índice de Avaricia en 74/100) ante las próximas entradas de ETF.",
-  "Las asignaciones del Rendimiento Estándar muestran un rendimiento óptimo comparado con los índices generales del mercado."
+  'Bitcoin se mantiene estable esta semana, manteniendo el nivel base de soporte de MXN 64.000.',
+  'El valor de tu portafolio aumentó un +4.2% desde el martes pasado, impulsado por continuas recompensas de bloque.',
+  'El sentimiento del mercado sigue siendo altamente positivo (índice de Avaricia en 74/100) ante las próximas entradas de ETF.',
+  'Las asignaciones del Rendimiento Estándar muestran un rendimiento óptimo comparado con los índices generales del mercado.',
 ];
 
 export const mockFAQs: FAQItem[] = [
   {
     question: '¿Cómo se administra mi inversión en Bitcoin?',
-    answer: 'Tus fondos se asignan dinámicamente en nuestros grupos especializados de bóvedas de Bitcoin. Nuestros agentes expertos coordinan operaciones para optimizar los rendimientos, asegurando adiciones diarias de crédito por recompensas de bloque directamente a tu panel de portafolio.',
+    answer:
+      'Tus fondos se asignan dinámicamente en nuestros grupos especializados de bóvedas de Bitcoin. Nuestros agentes expertos coordinan operaciones para optimizar los rendimientos, asegurando adiciones diarias de crédito por recompensas de bloque directamente a tu panel de portafolio.',
   },
   {
     question: '¿Por qué están deshabilitados los depósitos directos en mi cuenta?',
-    answer: 'Para garantizar el cumplimiento regulatorio y los protocolos de seguridad personalizados de nuestros inversores de Rendimiento Estándar, todos los depósitos son manejados manualmente por tu gerente de cuenta asignado. Comunícate con soporte o usa las opciones del chat "Contactar agente" para coordinar las vías de depósito.',
+    answer:
+      'Para garantizar el cumplimiento regulatorio y los protocolos de seguridad personalizados de nuestros inversores de Rendimiento Estándar, todos los depósitos son manejados manualmente por tu gerente de cuenta asignado. Comunícate con soporte o usa las opciones del chat "Contactar agente" para coordinar las vías de depósito.',
   },
   {
     question: '¿Cuánto tardan en procesarse los retiros?',
-    answer: 'Las solicitudes de retiro requieren verificación facial biométrica automática seguida de una revisión manual de cumplimiento. Esto se procesa dentro de una ventana estándar de 24 a 48 horas para proteger la seguridad y cumplir con las restricciones de transferencia de almacenamiento en frío.',
+    answer:
+      'Las solicitudes de retiro requieren verificación facial biométrica automática seguida de una revisión manual de cumplimiento. Esto se procesa dentro de una ventana estándar de 24 a 48 horas para proteger la seguridad y cumplir con las restricciones de transferencia de almacenamiento en frío.',
   },
   {
     question: '¿Existe un monto mínimo de retiro?',
-    answer: 'Sí, el monto mínimo de retiro simulado es de COP 100. Los retiros también deben alinearse con los requisitos actuales de tenencia activa especificados del servicio Rendimiento Estándar.',
+    answer:
+      'Sí, el monto mínimo de retiro simulado es de MXN 100. Los retiros también deben alinearse con los requisitos actuales de tenencia activa especificados del servicio Rendimiento Estándar.',
   },
   {
     question: '¿Cómo funciona la verificación facial?',
-    answer: 'Nuestra verificación facial biométrica utiliza imágenes basadas en el navegador (simulación o señal de cámara real) para garantizar la alineación con los perfiles de seguridad registrados. Se te pedirá que gires la cabeza a la izquierda, a la derecha, mires hacia arriba y sonrías para completar el protocolo de validación.',
+    answer:
+      'Nuestra verificación facial biométrica utiliza imágenes basadas en el navegador (simulación o señal de cámara real) para garantizar la alineación con los perfiles de seguridad registrados. Se te pedirá que gires la cabeza a la izquierda, a la derecha, mires hacia arriba y sonrías para completar el protocolo de validación.',
   },
 ];
 
@@ -243,7 +183,12 @@ export const mockPlans: InvestmentPlan[] = [
     minDeposit: 5000000,
     roi: '28% - 32% Anual',
     duration: '12 Meses',
-    features: ['Rendimiento diario', 'Soporte de cuenta', 'Panel completo de IA', 'Verificaciones automaticas', 'Almacenamiento en frio personalizado'],
+    features: [
+      'Rendimiento diario',
+      'Soporte de cuenta',
+      'Panel completo de IA',
+      'Verificaciones automaticas',
+      'Almacenamiento en frio personalizado',
+    ],
   },
 ];
-
