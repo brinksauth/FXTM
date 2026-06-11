@@ -87,8 +87,9 @@ export default function Header() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('user_session');
-    router.push('/login');
+    fetch('/api/auth/logout', { method: 'POST' }).finally(() => {
+      router.push('/login');
+    });
   };
 
   return (

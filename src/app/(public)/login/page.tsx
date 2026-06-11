@@ -49,6 +49,7 @@ export default function LoginPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    const formElement = e.currentTarget as HTMLFormElement;
 
     if (!email || !password) {
       setError('Completa todos los campos de acceso.');
@@ -63,19 +64,28 @@ export default function LoginPage() {
     setLoading(true);
 
     // Simulate server delay
-    setTimeout(() => {
-      setLoading(false);
-      
-      // Save session in LocalStorage
-      localStorage.setItem('user_session', JSON.stringify({ email, isLoggedIn: true }));
-      
-      if (rememberMe) {
-        localStorage.setItem('remembered_email', email);
-      } else {
-        localStorage.removeItem('remembered_email');
-      }
+    setTimeout(async () => {
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          body: new FormData(formElement),
+        });
 
-      router.push('/dashboard');
+        if (!response.ok) {
+          setError('Correo o clave de acceso incorrectos.');
+          return;
+        }
+
+        if (rememberMe) {
+          localStorage.setItem('remembered_email', email);
+        } else {
+          localStorage.removeItem('remembered_email');
+        }
+
+        router.push('/dashboard');
+      } finally {
+        setLoading(false);
+      }
     }, 1200);
   };
 

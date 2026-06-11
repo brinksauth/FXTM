@@ -37,8 +37,9 @@ export default function Sidebar({ onLogout }: SidebarProps) {
     if (onLogout) {
       onLogout();
     } else {
-      localStorage.removeItem('user_session');
-      router.push('/login');
+      fetch('/api/auth/logout', { method: 'POST' }).finally(() => {
+        router.push('/login');
+      });
     }
   };
 
