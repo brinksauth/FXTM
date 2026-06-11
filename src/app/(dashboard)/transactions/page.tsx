@@ -1,23 +1,29 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
-  Search,
-  Filter,
   ArrowUpDown,
+  CheckCircle,
+  Clock,
+  Download,
+  Filter,
+  Search,
+  TrendingUp,
   ChevronLeft,
   ChevronRight,
-  TrendingUp,
-  Download,
-  CheckCircle,
-  Clock
 } from 'lucide-react';
 import { mockTransactions } from '@/data/mockData';
 import { privacyEventName, readPrivacyPreference } from '@/utils/privacy';
 
+const typeLabels = {
+  Deposit: 'Depósito',
+  Revenue: 'Ganancia',
+  Withdrawal: 'Retiro',
+} as const;
+
 export default function TransactionsPage() {
   const [search, setSearch] = useState('');
-  const [filterType, setFilterType] = useState<'Todos' | 'Depósito' | 'Ganancia' | 'Retiro'>('Todos');
+  const [filterType, setFilterType] = useState<'All' | keyof typeof typeLabels>('All');
   const [sortField, setSortField] = useState<'date' | 'amount'>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,8 +32,8 @@ export default function TransactionsPage() {
 
   useEffect(() => {
     const handlePrivacyChange = (e: Event) => {
-      const customEvent = e as CustomEvent;
-      setIsPrivate(customEvent.detail);
+      const customEvent = e as CustomEvent<boolean>;
+      setIsPrivate(Boolean(customEvent.detail));
     };
 
     setIsPrivate(readPrivacyPreference());
@@ -35,15 +41,12 @@ export default function TransactionsPage() {
     return () => window.removeEventListener(privacyEventName, handlePrivacyChange);
   }, []);
 
-  // Search & Filter Logic
   const filteredTxns = useMemo(() => {
+    const term = search.toLowerCase();
+
     return mockTransactions
       .filter((tx) => {
-        // Filter by Type
-        if (filterType !== 'Todos' && tx.type !== filterType) return false;
-        
-        // Filter by Search Query
-        const term = search.toLowerCase();
+        if (filterType !== 'All' && tx.type !== filterType) return false;
         return (
           tx.id.toLowerCase().includes(term) ||
           tx.reference.toLowerCase().includes(term) ||
@@ -52,23 +55,19 @@ export default function TransactionsPage() {
         );
       })
       .sort((a, b) => {
-        // Sorting Logic
         if (sortField === 'date') {
-          const timeA = new Date(a.date).getTime();
-          const timeB = new Date(b.date).getTime();
-          if (timeA !== timeB) {
-            return sortOrder === 'desc' ? timeB - timeA : timeA - timeB;
-          }
-          const priority = (type: string) => (type === 'Depósito' ? 0 : type === 'Ganancia' ? 1 : 2);
+          const timeA = new Date(a.sortDate ?? a.date).getTime();
+          const timeB = new Date(b.sortDate ?? b.date).getTime();
+          if (timeA !== timeB) return sortOrder === 'desc' ? timeB - timeA : timeA - timeB;
+          const priority = (type: string) => (type === 'Deposit' ? 0 : type === 'Revenue' ? 1 : 2);
           return priority(a.type) - priority(b.type);
-        } else {
-          return sortOrder === 'desc' ? b.amount - a.amount : a.amount - b.amount;
         }
+
+        return sortOrder === 'desc' ? b.amount - a.amount : a.amount - b.amount;
       });
   }, [search, filterType, sortField, sortOrder]);
 
-  // Pagination Logic
-  const totalPages = Math.ceil(filteredTxns.length / itemsPerPage) || 1;
+  const totalPages = Math.max(Math.ceil(filteredTxns.length / itemsPerPage), 1);
   const paginatedTxns = useMemo(() => {
     const startIdx = (currentPage - 1) * itemsPerPage;
     return filteredTxns.slice(startIdx, startIdx + itemsPerPage);
@@ -76,7 +75,7 @@ export default function TransactionsPage() {
 
   const handleSort = (field: 'date' | 'amount') => {
     if (sortField === field) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+      setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
     } else {
       setSortField(field);
       setSortOrder('desc');
@@ -84,42 +83,25 @@ export default function TransactionsPage() {
     setCurrentPage(1);
   };
 
-  const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
-
-  // Export CSV mock trigger
-  const exportToCSV = () => {
-    alert('¡Exportación CSV simulada! Todos los registros han sido descargados.');
-  };
-
   return (
     <div className="space-y-6">
-      {/* Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="font-display font-extrabold text-2xl md:text-3xl text-text-primary">
             Historial de Transacciones
           </h1>
           <p className="text-text-muted text-xs sm:text-sm mt-1">
-            Busca, ordena, filtra y descarga los registros de tus transacciones
+            Revisa depósitos y ganancias en orden cronológico con el mismo estilo del panel.
           </p>
         </div>
 
-        <button
-          onClick={exportToCSV}
-            className="flex items-center justify-center gap-2 px-4 py-2.5 bg-bg-card border border-border-main hover:border-brand-primary/30 text-xs font-semibold text-text-muted hover:text-text-primary rounded-xl transition-all"
-        >
+        <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-bg-card border border-border-main hover:border-brand-primary/30 text-xs font-semibold text-text-muted hover:text-text-primary rounded-xl transition-all">
           <Download className="w-4 h-4" />
           <span>Exportar Registro CSV</span>
         </button>
       </div>
 
-      {/* Search and Filters Bar */}
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-bg-card border border-border-main p-4 rounded-2xl">
-        {/* Search */}
         <div className="relative w-full md:w-80">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
           <input
@@ -134,10 +116,9 @@ export default function TransactionsPage() {
           />
         </div>
 
-        {/* Filters */}
         <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto">
           <Filter className="w-4 h-4 text-text-muted hidden sm:inline" />
-          {(['Todos', 'Depósito', 'Ganancia', 'Retiro'] as const).map((t) => (
+          {(['All', 'Deposit', 'Revenue', 'Withdrawal'] as const).map((t) => (
             <button
               key={t}
               onClick={() => {
@@ -150,13 +131,12 @@ export default function TransactionsPage() {
                   : 'bg-bg-main border border-border-main text-text-muted hover:text-text-primary'
               }`}
             >
-              {t}
+              {t === 'All' ? 'Todos' : typeLabels[t]}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Table Container */}
       <div className="bg-bg-card border border-border-main rounded-3xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
@@ -189,8 +169,9 @@ export default function TransactionsPage() {
             <tbody className="divide-y divide-border-main/55 font-medium text-text-primary">
               {paginatedTxns.length > 0 ? (
                 paginatedTxns.map((tx) => {
-                  const isDeposit = tx.type === 'Depósito';
-                  const isProfit = tx.type === 'Ganancia';
+                  const isDeposit = tx.type === 'Deposit';
+                  const isRevenue = tx.type === 'Revenue';
+
                   return (
                     <tr key={tx.id} className="hover:bg-bg-card-hover/20 transition-colors">
                       <td className="p-4 sm:p-5 font-mono text-[11px] text-text-muted">{tx.id}</td>
@@ -200,19 +181,19 @@ export default function TransactionsPage() {
                           className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg text-[10px] font-bold ${
                             isDeposit
                               ? 'bg-blue-500/10 text-blue-500'
-                              : isProfit
+                              : isRevenue
                               ? 'bg-green-500/10 text-green-500'
                               : 'bg-brand-primary/10 text-brand-primary'
                           }`}
                         >
                           {isDeposit ? (
                             <CheckCircle className="w-3 h-3" />
-                          ) : isProfit ? (
+                          ) : isRevenue ? (
                             <TrendingUp className="w-3 h-3" />
                           ) : (
                             <Clock className="w-3 h-3" />
                           )}
-                          {tx.type}
+                          {typeLabels[tx.type]}
                         </span>
                       </td>
                       <td className="p-4 sm:p-5">
@@ -228,8 +209,9 @@ export default function TransactionsPage() {
                         <span className="text-[11px] text-text-muted">{tx.status}</span>
                       </td>
                       <td className="p-4 sm:p-5 font-mono font-bold text-sm">
-                        <span className={isProfit || isDeposit ? 'text-green-600' : 'text-brand-primary'}>
-                          {isProfit || isDeposit ? '+' : '-'}{isPrivate ? '••••' : `MXN ${tx.amount.toLocaleString()}`}
+                        <span className={isRevenue || isDeposit ? 'text-green-600' : 'text-brand-primary'}>
+                          {isRevenue || isDeposit ? '+' : '-'}
+                          {isPrivate ? '••••' : `MXN ${tx.amount.toLocaleString()}`}
                         </span>
                         <span className="text-[9px] text-text-muted block mt-0.5 font-normal">
                           {tx.btcAmount ? (isPrivate ? '•••• BTC' : `${tx.btcAmount} BTC`) : '--'}
@@ -252,7 +234,6 @@ export default function TransactionsPage() {
           </table>
         </div>
 
-        {/* Pagination Bar */}
         {totalPages > 1 && (
           <div className="p-4 bg-bg-main/30 border-t border-border-main flex items-center justify-between text-xs text-text-muted">
             <span>
@@ -262,14 +243,14 @@ export default function TransactionsPage() {
 
             <div className="flex gap-2">
               <button
-                onClick={() => handlePageChange(currentPage - 1)}
+                onClick={() => setCurrentPage((page) => Math.max(page - 1, 1))}
                 disabled={currentPage === 1}
                 className="p-1.5 rounded-lg border border-border-main bg-bg-main text-text-muted hover:text-text-primary disabled:opacity-40 disabled:hover:text-text-muted transition-colors"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
-                onClick={() => handlePageChange(currentPage + 1)}
+                onClick={() => setCurrentPage((page) => Math.min(page + 1, totalPages))}
                 disabled={currentPage === totalPages}
                 className="p-1.5 rounded-lg border border-border-main bg-bg-main text-text-muted hover:text-text-primary disabled:opacity-40 disabled:hover:text-text-muted transition-colors"
               >

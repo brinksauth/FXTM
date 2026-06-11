@@ -390,8 +390,8 @@ export default function DashboardPage() {
 
           <div className="divide-y divide-border-main/50 mt-2">
             {recentTransactions.map((tx) => {
-              const isDeposit = tx.type === 'Depósito';
-              const isProfit = tx.type === 'Ganancia';
+              const isDeposit = tx.type === 'Deposit';
+              const isProfit = tx.type === 'Revenue';
               return (
                 <div key={tx.id} className="py-3.5 flex items-center justify-between gap-4 group">
                   <div className="flex items-center gap-3">

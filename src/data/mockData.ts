@@ -15,7 +15,8 @@ export interface UserProfile {
 export interface Transaction {
   id: string;
   date: string;
-  type: 'Depósito' | 'Ganancia' | 'Retiro';
+  sortDate?: string;
+  type: 'Deposit' | 'Revenue' | 'Withdrawal';
   status: 'Completado' | 'Pendiente' | 'Fallido';
   amount: number;
   btcAmount?: number;
@@ -58,8 +59,8 @@ export const formatMXN = (value: number) =>
 export const mockUser: UserProfile = {
   name: 'Johan Froesse Martens',
   investmentService: 'Plan plata',
-  portfolioValue: 15500,
-  profit: 14500,
+  portfolioValue: 25500,
+  profit: 22000,
   growthPercentage: 31.5,
   btcHoldings: 0.7472,
   accountNumber: '722969020038509150',
@@ -72,8 +73,9 @@ export const mockUser: UserProfile = {
 export const mockTransactions: Transaction[] = [
   {
     id: 'TXN-001',
-    date: '9 Jun 2026',
-    type: 'Depósito',
+    date: '09 Jun 2026',
+    sortDate: '2026-06-09T08:00:00.000Z',
+    type: 'Deposit',
     status: 'Completado',
     amount: 1000,
     btcAmount: 0.0312,
@@ -81,12 +83,33 @@ export const mockTransactions: Transaction[] = [
   },
   {
     id: 'TXN-002',
-    date: '9 Jun 2026',
-    type: 'Ganancia',
+    date: '10 Jun 2026',
+    sortDate: '2026-06-10T08:00:00.000Z',
+    type: 'Revenue',
     status: 'Completado',
     amount: 14500,
     btcAmount: 0.2258,
     reference: 'REF-BTC-PRF-001',
+  },
+  {
+    id: 'TXN-003',
+    date: '10 Jun 2026',
+    sortDate: '2026-06-10T10:00:00.000Z',
+    type: 'Deposit',
+    status: 'Completado',
+    amount: 2500,
+    btcAmount: 0.0389,
+    reference: 'REF-BTC-DEP-002',
+  },
+  {
+    id: 'TXN-004',
+    date: '10 Jun 2026',
+    sortDate: '2026-06-10T12:30:00.000Z',
+    type: 'Revenue',
+    status: 'Completado',
+    amount: 7500,
+    btcAmount: 0.1168,
+    reference: 'REF-BTC-REV-002',
   },
 ];
 

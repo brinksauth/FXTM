@@ -15,7 +15,7 @@ import { mockUser, mockTransactions } from '@/data/mockData';
 import { privacyEventName, readPrivacyPreference } from '@/utils/privacy';
 
 export default function WalletPage() {
-  const depositTxns = mockTransactions.filter(tx => tx.type === 'Depósito').slice(0, 3);
+  const depositTxns = mockTransactions.filter(tx => tx.type === 'Deposit').slice(0, 3);
   const mockWalletAddress = 'bc1q9x7y4z2h6f8e5j9k3m1p0q7s6v5w4u8t';
   const [isPrivate, setIsPrivate] = useState(true);
   const portfolioValue = new Intl.NumberFormat('es-MX', {
